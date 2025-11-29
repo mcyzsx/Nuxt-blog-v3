@@ -1,4 +1,5 @@
 import {
+	LazyWidgetAnnouncementCard,
 	LazyWidgetBlogLog,
 	LazyWidgetBlogStats,
 	LazyWidgetBlogTech,
@@ -11,6 +12,7 @@ import { pascal } from 'radash'
 
 // @keep-sorted
 const rawWidgets = {
+	LazyWidgetAnnouncementCard,
 	LazyWidgetBlogLog,
 	LazyWidgetBlogStats,
 	LazyWidgetBlogTech,

@@ -1,3 +1,19 @@
+<script setup>
+const showPlayer = ref(false)
+
+onMounted(() => {
+	// 确保在客户端显示播放器
+	showPlayer.value = true
+
+	// 延迟初始化，确保脚本加载完成
+	setTimeout(() => {
+		if (window.NeteaseMiniPlayer) {
+			window.NeteaseMiniPlayer.init?.()
+		}
+	}, 500)
+})
+</script>
+
 <template>
 <NuxtLoadingIndicator />
 <SkipToContent />
@@ -11,51 +27,65 @@
 </div>
 <ZPanel />
 <ZPopover />
+
+<!-- 音乐播放器 - 使用原生HTML确保正确初始化 -->
+<ClientOnly>
+	<div
+		v-if="showPlayer"
+		class="netease-mini-player"
+		data-playlist-id="13681647281"
+		data-theme="auto"
+		data-position="bottom-right"
+		data-default-minimized="true"
+		data-lyric="true"
+		data-autoplay="false"
+	/>
+</ClientOnly>
 </template>
 
 <!-- eslint-disable-next-line vue/enforce-style-attribute -->
 <style lang="scss">
 // Nuxt 根元素 id
 #z-root {
-	display: flex;
-	justify-content: center;
-	gap: 1rem;
-	min-width: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  min-width: 0;
 }
 
 // 合并处理 #z-sidebar, #z-aside
 aside {
-	flex-shrink: 0;
-	position: sticky;
-	top: 0;
-	width: 280px;
-	height: 100vh;
-	height: 100dvh;
-	scrollbar-width: thin;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  width: 280px;
+  height: 100vh;
+  height: 100dvh;
+  scrollbar-width: thin;
 
-	@media (max-width: $breakpoint-widescreen) {
-		flex-shrink: 0.2;
-	}
+  @media (max-width: $breakpoint-widescreen) {
+    flex-shrink: 0.2;
+  }
 }
 
 #content {
-	display: flex;
-	gap: 1rem;
+  display: flex;
+  gap: 1rem;
 
-	// 若设置的是 max-width，则内部 main 宽度为 fit-content，可能无法撑满
-	// 此时即使设置 flex-grow，也会影响 #sidebar 无法正确 shrink
-	width: $breakpoint-widescreen;
-	min-width: 0; // 解决父级 flexbox 设置 justify-content: center 时溢出左侧消失的问题
+  width: $breakpoint-widescreen;
+  min-width: 0;
 
-	// 此处不建议给内容设置 padding
-	> main {
-		flex-grow: 1; // 使较小宽度的内容占满
+  > main {
+    flex-grow: 1;
+    min-width: 0;
+  }
+}
 
-		// overflow: hidden; // 会使一部分元素吸顶失效
-
-		// 使内容正确计算宽度而不横向溢出
-		// 也可设置 width: 0 或者 contain: inline-size（兼容性不佳）
-		min-width: 0;
-	}
+// 音乐播放器样式调整
+.netease-mini-player {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  z-index: 9999;
 }
 </style>

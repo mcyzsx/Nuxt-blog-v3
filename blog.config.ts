@@ -1,26 +1,31 @@
 import type { FeedEntry } from './app/types/feed'
 
 const basicConfig = {
-	title: '纸鹿摸鱼处',
-	subtitle: '纸鹿至麓不知路，支炉制露不止漉',
+	title: 'ZSXの小站',
+	subtitle: '造化钟神秀，阴阳割昏晓。',
 	// 长 description 利好于 SEO
-	description: '纸鹿本鹿的个人博客，分享技术与生活。“折腾不止，摸鱼生活——摸门🙏🏻”。纸鹿是一名开源爱好者，结识了许多志同道合的朋友。这个博客记录了他在生活和技术学习中的点滴经历，充满启发与思考。网站界面简洁美观，内容丰富实用，人气互动活跃，涵盖了编程、生活、学习等多个领域，为读者提供了卓越的阅读体验。',
+	description: '钟神秀的个人博客，我在这里分享我的生活日常、踩坑记录和资源分享。',
+	headerConfig: {
+		defaultTag: '资源分享者',
+		hoverTag: '摸鱼大人',
+		hoverSubtitle: '每一段旅行都有终点~',
+	},
 	author: {
-		name: '纸鹿本鹿',
-		avatar: 'https://www.zhilu.site/api/avatar.png',
-		email: 'hi@zhilu.cyou',
-		homepage: 'https://www.zhilu.site/',
+		name: '钟神秀',
+		avatar: '/image/avatar.webp',
+		email: 'me@mcyzsx.top',
+		homepage: 'https://www.mcyzsx.top/',
 	},
 	copyright: {
 		abbr: 'CC BY-NC-SA 4.0',
 		name: '署名-非商业性使用-相同方式共享 4.0 国际',
 		url: 'https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans',
 	},
-	favicon: 'https://www.zhilu.site/api/icon.png',
+	favicon: '/image/avatar.webp',
 	language: 'zh-CN',
-	timeEstablished: '2019-07-19',
+	timeEstablished: '2025-11-28',
 	timezone: 'Asia/Shanghai',
-	url: 'https://blog.zhilu.site/',
+	url: 'https://blog.mcyzsx.top/',
 	defaultCategory: '未分类',
 }
 
@@ -30,13 +35,19 @@ const basicConfig = {
 const blogConfig = {
 	...basicConfig,
 
+	announcement: {
+		enabled: true,
+		message: '欢迎来到我的博客！<br>如果网站有什么问题，优先<kbd>CTRL</kbd>+<kbd>F5</kbd>刷新一下~',
+	},
+
 	article: {
 		categories: {
 			[basicConfig.defaultCategory]: { icon: 'ph:folder-dotted-bold' },
 			经验分享: { icon: 'ph:mouse-bold', color: '#3af' },
 			杂谈: { icon: 'ph:chat-bold', color: '#3ba' },
 			生活: { icon: 'ph:shooting-star-bold', color: '#f77' },
-			代码: { icon: 'ph:code-bold', color: '#77f' },
+			资源分享: { icon: 'mdi:web', color: '#24d' },
+			// 代码: { icon: 'ph:code-bold', color: '#77f' },
 		},
 		defaultCategoryIcon: 'ph:folder-bold',
 		/** 文章版式，首个为默认版式 */
@@ -69,13 +80,16 @@ const blogConfig = {
 	/** 向 <head> 中添加脚本 */
 	scripts: [
 		// 自己部署的 Umami 统计服务
-		{ 'src': 'https://zhi.zhilu.cyou/zhi.js', 'data-website-id': 'a1997c81-a42b-46f6-8d1d-8fbd67a8ef41', 'defer': true },
+		// { 'src': 'https://zhi.zhilu.cyou/zhi.js', 'data-website-id': 'a1997c81-a42b-46f6-8d1d-8fbd67a8ef41', 'defer': true },
 		// 自己网站的 Cloudflare Insights 统计服务
-		{ 'src': 'https://static.cloudflareinsights.com/beacon.min.js', 'data-cf-beacon': '{"token": "97a4fe32ed8240ac8284e9bffaf03962"}', 'defer': true },
+		// { 'src': 'https://static.cloudflareinsights.com/beacon.min.js', 'data-cf-beacon': '{"token": "97a4fe32ed8240ac8284e9bffaf03962"}', 'defer': true },
 		// Twikoo 评论系统
 		{ src: 'https://lib.baomitu.com/twikoo/1.6.44/twikoo.min.js', defer: true },
+		{
+			src: '/js/netease-mini-player-v2.js',
+			defer: true,
+		},
 	],
-
 	/** 自己部署的 Twikoo 服务 */
 	twikoo: {
 		envId: 'https://twikoo.zhilu.cyou/',
@@ -86,7 +100,7 @@ const blogConfig = {
 /** 用于生成 OPML 和友链页面配置 */
 export const myFeed: FeedEntry = {
 	author: blogConfig.author.name,
-	sitenick: '摸鱼处',
+	sitenick: '友人帐',
 	title: blogConfig.title,
 	desc: blogConfig.subtitle || blogConfig.description,
 	link: blogConfig.url,

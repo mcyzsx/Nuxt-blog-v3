@@ -16,6 +16,10 @@ export default defineNuxtConfig({
 				{ name: 'mobile-web-app-capable', content: 'yes' },
 			],
 			link: [
+				{
+					rel: 'stylesheet',
+					href: '/css/netease-mini-player-v2.css',
+				},
 				{ rel: 'icon', href: blogConfig.favicon },
 				{ rel: 'alternate', type: 'application/atom+xml', href: '/atom.xml' },
 				{ rel: 'preconnect', href: blogConfig.twikoo.preload },
