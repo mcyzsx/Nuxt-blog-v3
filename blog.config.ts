@@ -7,12 +7,12 @@ const basicConfig = {
 	description: '钟神秀的个人博客，我在这里分享我的生活日常、踩坑记录和资源分享。',
 	headerConfig: {
 		defaultTag: '资源分享者',
-		hoverTag: '摸鱼大人',
-		hoverSubtitle: '每一段旅行都有终点~',
+		hoverTag: '小说爱好者',
+		hoverSubtitle: '每一段旅行都有终点~——”龙泽尔·爱德华',
 	},
 	author: {
 		name: '钟神秀',
-		avatar: '/image/avatar.webp',
+		avatar: 'https://cn.cravatar.com/avatar/56cd72b5460ecaa08ddffea9562f5629',
 		email: 'me@mcyzsx.top',
 		homepage: 'https://www.mcyzsx.top/',
 	},
@@ -37,12 +37,11 @@ const blogConfig = {
 
 	announcement: {
 		enabled: true,
-		message: '欢迎来到我的博客！<br>如果网站有什么问题，优先<kbd>CTRL</kbd>+<kbd>F5</kbd>刷新一下~',
+		message: '欢迎来到我的<strong>博客</strong>！<br>如果网站有什么问题，优先<kbd>CTRL</kbd>+<kbd>F5</kbd>刷新一下~<br>如果你还有什么问题和建议，优先通过<a href="mailto:me@mcyzsx.top" target="_blank" rel="noopener noreferrer">邮件</a>联系我~',
 	},
 
 	article: {
-		categories: {
-			[basicConfig.defaultCategory]: { icon: 'ph:folder-dotted-bold' },
+		categories: <{ [category: string]: { icon: string, color?: string } }>{
 			经验分享: { icon: 'ph:mouse-bold', color: '#3af' },
 			杂谈: { icon: 'ph:chat-bold', color: '#3ba' },
 			生活: { icon: 'ph:shooting-star-bold', color: '#f77' },
@@ -50,6 +49,24 @@ const blogConfig = {
 			// 代码: { icon: 'ph:code-bold', color: '#77f' },
 		},
 		defaultCategoryIcon: 'ph:folder-bold',
+		defaultTagIcon: 'ph:tag-bold',
+
+		tags: <{ [tag: string]: { icon: string, color?: string } }>{
+			'Android': { icon: 'ph:android-logo-bold', color: '#3DDC84' }, // 绿色 - Android品牌色
+			'AI': { icon: 'hugeicons:deepseek', color: '#9C27B0' }, // 紫色 - 人工智能的神秘感
+			'docker': { icon: 'mdi:docker', color: '#2496ED' }, // 蓝色 - Docker品牌色
+			'gerrit': { icon: 'mdi:git', color: '#F05032' }, // 红色 - Git相关
+			'WPF': { icon: 'cib:uikit', color: '#512BD4' }, // 深紫色 - Windows UI
+			'code': { icon: 'humbleicons:code', color: '#007ACC' }, // 蓝色 - 代码编辑器主题色
+			'mod': { icon: 'streamline-plump:module', color: '#FF6B35' }, // 橙色 - 模块化
+			'environment': { icon: 'tdesign:system-search', color: '#4CAF50' }, // 绿色 - 环境/生态
+			'deploy': { icon: 'grommet-icons:deploy', color: '#FF4081' }, // 粉红色 - 部署/发布
+			'wiki': { icon: 'jam:wikipedia', color: '#6366F1' }, // 靛蓝色 - 知识/文档
+			'C#': { icon: 'nonicons:c-sharp-16', color: '#178600' }, // 深绿色 - C#语言
+			'blog': { icon: 'fa-solid:blog', color: '#FF9800' }, // 橙色 - 博客/内容
+			'python': { icon: 'nonicons:python-16', color: '#3776AB' }, // 蓝色 - Python品牌色
+			'C': { icon: 'nonicons:c-16', color: '#A8B9CC' }, // 浅灰色 - C语言
+		},
 		/** 文章版式，首个为默认版式 */
 		types: {
 			tech: {},

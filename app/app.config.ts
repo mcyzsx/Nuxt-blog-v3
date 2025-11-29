@@ -76,7 +76,7 @@ export default defineAppConfig({
 				title: '信息',
 				items: [
 					{ icon: 'simple-icons:nuxtdotjs', text: `主题: Clarity ${version}`, url: 'https://github.com/L33Z22L11/blog-v3' },
-					{ icon: 'ph:swatches-bold', text: '主题和组件文档', url: '/theme' },
+					// { icon: 'ph:swatches-bold', text: '主题和组件文档', url: 'https://blog.zhilu.cyou/theme' },
 					{ icon: 'ph:certificate-bold', text: '陕ICP备2025082251号', url: 'https://beian.miit.gov.cn/' },
 				],
 			},
@@ -110,6 +110,20 @@ export default defineAppConfig({
 		sortOrder: 'date' as const,
 		/** 允许（普通/预览/归档）文章列表正序，开启后排序方式左侧图标可切换顺序 */
 		allowAscending: false,
+	},
+
+	stats: {
+		/** 归档页面每年标题对应的年龄 */
+		birthYear: 2005,
+		/** blog-stats widget 的预置文本 */
+		wordCount: '约10万',
+	},
+
+	// 主题色配置
+	theme: {
+		primary: '#2c8edd',
+		secondary: '#357abd',
+		accent: '#fae386',
 	},
 
 	themes: {

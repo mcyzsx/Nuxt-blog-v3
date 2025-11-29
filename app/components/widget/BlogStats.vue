@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { UtilDate } from '#components'
+import { toZonedTime } from 'date-fns-tz'
 
 const appConfig = useAppConfig()
 const runtimeConfig = useRuntimeConfig()
 // 将服务器时区转换为博客指定时区
+const buildTime = toZonedTime(runtimeConfig.public.buildTime, appConfig.timezone)
 
+const totalWords = ref(appConfig.stats.wordCount)
 const yearlyTip = ref('')
 
 const blogStats = computed(() => [{
@@ -15,16 +17,13 @@ const blogStats = computed(() => [{
 	color: 'var(--c-primary)',
 }, {
 	label: '上次更新',
-	value: () => h(UtilDate, {
-		date: runtimeConfig.public.buildTime,
-		relative: true,
-		tipPrefix: '构建于',
-	}),
+	value: timeElapse(buildTime),
+	tip: `构建于${getLocaleDatetime(buildTime)}`,
 	icon: 'ph:clock-bold',
 	color: 'var(--c-accent)',
 }, {
 	label: '总字数',
-	value: computed(() => stats.value ? formatNumber(stats.value.total.words) : ''),
+	value: totalWords,
 	tip: yearlyTip,
 	icon: 'ph:file-text-bold',
 	color: 'var(--c-success)',
@@ -32,6 +31,7 @@ const blogStats = computed(() => [{
 
 onMounted(async () => {
 	const stats = await $fetch('/api/stats')
+	totalWords.value = formatNumber(stats.total.words)
 	yearlyTip.value = Object.entries(stats.annual).reverse().map(([year, item]) =>
 		`${year}年：${item.posts}篇，${formatNumber(item.words)}字`,
 	).join('\n')

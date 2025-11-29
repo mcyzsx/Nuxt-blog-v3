@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { sort } from 'radash'
+import { useArticleFilter } from '~/composables/useArticle'
 
 const appConfig = useAppConfig()
 useSeoMeta({
@@ -12,10 +13,13 @@ layoutStore.setAside(['blog-stats', 'announcement-card', 'blog-tech', 'comm-grou
 
 const { data: listRaw } = await useArticleIndex()
 const { listSorted, isAscending, sortOrder } = useArticleSort(listRaw, { bindDirectionQuery: 'asc', bindOrderQuery: 'sort' })
-const { category, categories, listCategorized } = useCategory(listSorted, { bindQuery: 'category' })
-const { page, totalPages, listPaged } = usePagination(listCategorized, { bindQuery: 'page' })
+const { category, categories, tag, tags, listFiltered } = useArticleFilter(listSorted, {
+	categoryBindQuery: 'category',
+	tagBindQuery: 'tag',
+})
+const { page, totalPages, listPaged } = usePagination(listFiltered, { bindQuery: 'page' })
 
-watch(category, () => {
+watch([category, tag], () => {
 	page.value = 1
 })
 
@@ -47,12 +51,19 @@ const listRecommended = computed(() => sort(
 				</UtilLink>
 			</div>
 
-			<PostOrderToggle
-				v-model:is-ascending="isAscending"
-				v-model:sort-order="sortOrder"
-				v-model:category="category"
-				:categories
-			/>
+			<div class="filter-group">
+				<PostOrderToggle
+					v-model:is-ascending="isAscending"
+					v-model:sort-order="sortOrder"
+					v-model:category="category"
+					:categories
+				/>
+
+				<PostTagToggle
+					v-model:tag="tag"
+					:tags
+				/>
+			</div>
 		</div>
 
 		<TransitionGroup tag="menu" class="proper-height" name="float-in">
@@ -76,6 +87,12 @@ const listRecommended = computed(() => sort(
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+}
+
+.filter-group {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
 }
 
 .preview-entrance {
