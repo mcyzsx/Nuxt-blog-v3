@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import type ArticleProps from '~/types/article'
 import { sort } from 'radash'
-import { useArticleFilter } from '~/composables/useArticle'
+import { useArticleFilter, useArticleIndexOptions } from '~/composables/useArticle'
 
 const appConfig = useAppConfig()
 useSeoMeta({
@@ -11,9 +12,19 @@ useSeoMeta({
 const layoutStore = useLayoutStore()
 layoutStore.setAside(['blog-stats', 'blog-tech', 'announcement-card', 'work-status', 'latest-comments', 'comm-group', 'poetry'])
 
-const listRaw = useArticleIndexOptions() // 默认查询 posts/%
+const listRaw = useArticleIndexOptions() // Readonly<Ref<...>>
 
-const { listSorted, isAscending, sortOrder } = useArticleSort(listRaw, {
+// 2. 包成普通的 ComputedRef<ArticleProps[]>
+const listNormalized = computed<ArticleProps[]>(() => {
+	// 如果有可能返回 never[]，就手动兜底成空数组
+	const raw = listRaw.value
+	if (!Array.isArray(raw) || !raw.length)
+		return []
+	return raw as ArticleProps[]
+})
+
+// 3. 再往下传
+const { listSorted, isAscending, sortOrder } = useArticleSort(listNormalized, {
 	bindDirectionQuery: 'asc',
 	bindOrderQuery: 'sort',
 })
@@ -32,7 +43,11 @@ watch([category, tag], () => {
 useSeoMeta({ title: () => (page.value > 1 ? `第${page.value}页` : '') })
 
 const listRecommended = computed(() => sort(
-	listRaw.value.filter(item => item?.recommend),
+	listRaw.value.filter(item => item?.recommend).map(item => ({
+		...item,
+		categories: item.categories ? [...item.categories] : undefined,
+		tags: item.tags ? [...item.tags] : undefined,
+	})),
 	post => post.recommend || 0,
 	true,
 ))

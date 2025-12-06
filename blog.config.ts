@@ -46,26 +46,22 @@ const blogConfig = {
 			杂谈: { icon: 'ph:chat-bold', color: '#3ba' },
 			生活: { icon: 'ph:shooting-star-bold', color: '#f77' },
 			资源分享: { icon: 'mdi:web', color: '#24d' },
-			// 代码: { icon: 'ph:code-bold', color: '#77f' },
+			技术分享: { icon: 'ph:code-bold', color: '#77f' },
 		},
 		defaultCategoryIcon: 'ph:folder-bold',
 		defaultTagIcon: 'ph:tag-bold',
 
 		tags: <{ [tag: string]: { icon: string, color?: string } }>{
-			'Android': { icon: 'ph:android-logo-bold', color: '#3DDC84' }, // 绿色 - Android品牌色
-			'AI': { icon: 'hugeicons:deepseek', color: '#9C27B0' }, // 紫色 - 人工智能的神秘感
-			'docker': { icon: 'mdi:docker', color: '#2496ED' }, // 蓝色 - Docker品牌色
-			'gerrit': { icon: 'mdi:git', color: '#F05032' }, // 红色 - Git相关
-			'WPF': { icon: 'cib:uikit', color: '#512BD4' }, // 深紫色 - Windows UI
-			'code': { icon: 'humbleicons:code', color: '#007ACC' }, // 蓝色 - 代码编辑器主题色
-			'mod': { icon: 'streamline-plump:module', color: '#FF6B35' }, // 橙色 - 模块化
-			'environment': { icon: 'tdesign:system-search', color: '#4CAF50' }, // 绿色 - 环境/生态
-			'deploy': { icon: 'grommet-icons:deploy', color: '#FF4081' }, // 粉红色 - 部署/发布
-			'wiki': { icon: 'jam:wikipedia', color: '#6366F1' }, // 靛蓝色 - 知识/文档
-			'C#': { icon: 'nonicons:c-sharp-16', color: '#178600' }, // 深绿色 - C#语言
-			'blog': { icon: 'fa-solid:blog', color: '#FF9800' }, // 橙色 - 博客/内容
-			'python': { icon: 'nonicons:python-16', color: '#3776AB' }, // 蓝色 - Python品牌色
-			'C': { icon: 'nonicons:c-16', color: '#A8B9CC' }, // 浅灰色 - C语言
+			资源分享: { icon: 'lucide:tool-case', color: '#3DDC84' }, // 绿色 - Android品牌色
+			markdown语法: { icon: 'material-icon-theme:markdown', color: 'rgba(68, 186, 255, 1)' }, // 红色 - Markdown品牌色
+			教程: { icon: 'mdi:book-open-blank-variant', color: '#FF9800' }, // 橙色 - 教程品牌色
+			Git: { icon: 'mdi:git', color: '#F05032' }, // 橙红色 - Git品牌色
+			评论: { icon: 'mdi:comment-multiple-outline', color: '#4CAF50' }, // 绿色 - 评论品牌色
+			说说: { icon: 'mdi:comment-text-outline', color: '#9C27B0' }, // 紫色 - 说说品牌色
+			文件分享: { icon: 'mdi:folder-upload-outline', color: '#2196F3' }, // 蓝色 - 文件分享品牌色
+			音乐播放器: { icon: 'mdi:music-circle-outline', color: '#E91E63' }, // 粉色 - 音乐播放器品牌色
+			网站推荐: { icon: 'mdi:web', color: '#FF5722' }, // 深橙色 - 网站推荐品牌色
+			博客: { icon: 'fa7-solid:blog', color: '#673AB7' }, // 深紫色 - 博客品牌色
 		},
 		/** 文章版式，首个为默认版式 */
 		types: {

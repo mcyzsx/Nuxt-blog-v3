@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { useArticleFilter } from '~/composables/useArticle'
+import type ArticleProps from '~/types/article'
+import { useArticleFilter, useArticleIndexOptions } from '~/composables/useArticle'
 
 const appConfig = useAppConfig()
 useSeoMeta({
@@ -9,9 +10,10 @@ useSeoMeta({
 const layoutStore = useLayoutStore()
 layoutStore.setAside(['blog-log'])
 
-// preview.vue 示例
-const listRaw = useArticleIndexOptions('previews/%')          // ← 直接拿数组
-const { listSorted } = useArticleSort(listRaw)                // 往下传值
+// ✅ 直接拿 Ref，不再包 useAsyncData
+const listRaw = useArticleIndexOptions('previews/%')
+
+const { listSorted, isAscending, sortOrder } = useArticleSort(listRaw)
 const { category, categories, tag, tags, listFiltered } = useArticleFilter(listSorted)
 </script>
 
@@ -31,7 +33,7 @@ const { category, categories, tag, tags, listFiltered } = useArticleFilter(listS
 				:categories
 			/>
 
-			<PostTagToggle
+			<ZTagToggle
 				v-model:tag="tag"
 				:tags
 			/>

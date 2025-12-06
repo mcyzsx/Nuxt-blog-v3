@@ -67,8 +67,8 @@ export default defineAppConfig({
 			{
 				title: '社交',
 				items: [
-					{ icon: 'ph:github-logo-bold', text: 'L33Z22L11', url: 'https://github.com/L33Z22L11' },
-					{ icon: 'ri:qq-line', text: '群: 169994096', url: 'https://jq.qq.com/?_wv=1027&k=lQfNSeEd' },
+					{ icon: 'ph:github-logo-bold', text: 'mcyzsx', url: 'https://github.com/mcyzsx' },
+					{ icon: 'ri:qq-line', text: '群: 169994096', url: 'https://qm.qq.com/q/Ha1GZQtMgE' },
 					{ icon: 'ph:envelope-simple-bold', text: blogConfig.author.email, url: `mailto:${blogConfig.author.email}` },
 				],
 			},
@@ -77,7 +77,7 @@ export default defineAppConfig({
 				items: [
 					{ icon: 'simple-icons:nuxtdotjs', text: `主题: Clarity ${version}`, url: 'https://github.com/L33Z22L11/blog-v3' },
 					// { icon: 'ph:swatches-bold', text: '主题和组件文档', url: 'https://blog.zhilu.cyou/theme' },
-					{ icon: 'ph:certificate-bold', text: '陕ICP备2025082251号', url: 'https://beian.miit.gov.cn/' },
+					// { icon: 'ph:certificate-bold', text: '陕ICP备2025082251号', url: 'https://beian.miit.gov.cn/' },
 				],
 			},
 		] satisfies Nav,
@@ -106,12 +106,12 @@ export default defineAppConfig({
 			title: '',
 			items: [
 				{ icon: 'ph:files-bold', text: '文章', url: '/' },
+				{ icon: 'ph:archive-bold', text: '归档', url: '/archive' },
 				{ icon: 'ph:link-bold', text: '友链', url: '/link' },
 				{ icon: 'mdi:wechat', text: '朋友圈', url: '/fcircle' },
-				{ icon: 'ph:archive-bold', text: '归档', url: '/archive' },
-				{ icon: 'mdi:pen', text: '日记', url: '/moment' },
-				{ icon: 'mdi:book', text: 'Ech0', url: '/essays' },
+				{ icon: 'mdi:pen', text: '日记', url: '/essays' },
 				{ icon: 'ph:devices-bold', text: '装备', url: '/devices' },
+				{ icon: 'icon-park-twotone:message', text: '留言板', url: '/message' },
 			],
 		},
 	] satisfies Nav,

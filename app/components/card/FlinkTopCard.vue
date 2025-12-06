@@ -102,9 +102,9 @@ onMounted(() => {
 	}
 
 	// 使用示例：加载百度统计脚本
-	loadScript('https://cdn.cbd.int/kemiaofxjun-cdn@1.0.1/js/blog_nuxt/FlinkTop.js')
+	loadScript('/js/FlinkTop.js')
 		.then(() => {
-			console.log('友链顶部重要JS加载完毕')
+			
 		})
 		.catch((err) => {
 			console.error('友链顶部重要JS加载完毕', err)

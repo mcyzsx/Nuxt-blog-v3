@@ -3,18 +3,18 @@ import type { ArticleOrderType } from '~/types/article'
 import { alphabetical } from 'radash'
 
 /* 1. 仅内部拉数据，外部永远拿到「纯数组」 */
+// composables/useArticle.ts
 export function useArticleIndexOptions(path = 'posts/%') {
-	const { data } = useAsyncData(
+	const { data } = useAsyncData<ArticleProps[]>(
 		`idx_${path.replace(/[^a-z0-9]/gi, '_')}`,
-		() =>
-			queryCollection('content')
-				.where('stem', 'LIKE', path)
-				.select('categories', 'date', 'description', 'image', 'path', 'readingTime', 'recommend', 'title', 'type', 'updated', 'tags')
-				.all(),
+		() => queryCollection('content')
+			.where('stem', 'LIKE', path)
+			.select('categories', 'date', 'description', 'image', 'path', 'readingTime', 'recommend', 'title', 'type', 'updated', 'tags')
+			.all() as Promise<ArticleProps[]>,
 		{ default: () => [] },
 	)
-	// ✅ 直接返回数组，ref 不会泄漏
-	return readonly(data) // 只读，防止外部改
+	// ❌ 不再包 readonly，直接返回 Ref<ArticleProps[]>
+	return data as Ref<ArticleProps[]>
 }
 
 /* 2. 分类 & 标签 & 排序 & 过滤器 保持原有逻辑即可 */

@@ -10,7 +10,7 @@
 | 我的装备 | [歆鸢阁](https://www.myxz.top/equipment) | [661111](https://github.com/661111/Myxz_Blog_Nuxt/blob/master/app/pages/equipment.vue) |
 | 关于页面 | [歆鸢阁](https://www.myxz.top/about) | [661111](https://github.com/661111/Myxz_Blog_Nuxt/blob/master/app/pages/about.vue) |
 | 友链朋友圈 | [歆鸢阁](https://www.myxz.top/fcircle) | [661111](https://github.com/661111/Myxz_Blog_Nuxt/blob/master/app/pages/fcircle.vue) |
-
+| 留言板 | [硅基漫游指南](https://blog.helong.online/messages) | [HeLongy]
 ---
 
 ### 魔改基础部分

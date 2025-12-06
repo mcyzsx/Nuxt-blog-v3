@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import type ArticleProps from '~/types/article'
 import { onClickOutside } from '@vueuse/core'
 import { group } from 'radash'
-import { useArticleFilter } from '~/composables/useArticle'
+
+import { useArticleFilter, useArticleIndexOptions } from '~/composables/useArticle'
 
 const appConfig = useAppConfig()
 useSeoMeta({
@@ -11,11 +13,21 @@ useSeoMeta({
 const birthYear = appConfig.component.stats.birthYear
 
 const layoutStore = useLayoutStore()
-layoutStore.setAside(['blog-stats', 'blog-log', 'latest-comments', 'comm-group', 'poetry'])
+layoutStore.setAside(['blog-stats', 'blog-log', 'latest-comments', 'comm-group', 'poetry']) // 你的文章类型声明路径
 
-const listRaw = useArticleIndexOptions() // 默认查询 posts/%
+// 1. 取原始数据
+const listRaw = useArticleIndexOptions() // Readonly<Ref<…>>
 
-const { category, categories, tag, tags, listFiltered } = useArticleFilter(listRaw, {
+// 2. 包成 ComputedRef<ArticleProps[]>
+const listNormalized = computed<ArticleProps[]>(() => {
+	const raw = listRaw.value
+	if (!Array.isArray(raw) || !raw.length)
+		return []
+	return raw as ArticleProps[]
+})
+
+// 3. 再传给 useArticleFilter
+const { category, categories, tag, tags, listFiltered } = useArticleFilter(listNormalized, {
 	categoryBindQuery: 'category',
 	tagBindQuery: 'tag',
 })

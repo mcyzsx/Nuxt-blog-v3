@@ -42,6 +42,19 @@ catalogs:
     unist-util-visit:
       specifier: ^5.0.0
       version: 5.0.0
+  default:
+    aplayer:
+      specifier: ^1.10.1
+      version: 1.10.1
+    cheerio:
+      specifier: ^1.1.2
+      version: 1.1.2
+    dayjs:
+      specifier: ^1.11.19
+      version: 1.11.19
+    markdown-it:
+      specifier: ^14.1.0
+      version: 14.1.0
   framework:
     '@zinkawaii/tsconfig':
       specifier: ^0.0.2
@@ -240,10 +253,10 @@ importers:
         specifier: catalog:content
         version: 6.5.2
       aplayer:
-        specifier: ^1.10.1
+        specifier: 'catalog:'
         version: 1.10.1
       cheerio:
-        specifier: ^1.1.2
+        specifier: 'catalog:'
         version: 1.1.2
       ci-info:
         specifier: catalog:framework
@@ -255,7 +268,7 @@ importers:
         specifier: catalog:util
         version: 3.2.0(date-fns@4.1.0)
       dayjs:
-        specifier: ^1.11.19
+        specifier: 'catalog:'
         version: 1.11.19
       embla-carousel-autoplay:
         specifier: catalog:ui
@@ -267,8 +280,11 @@ importers:
         specifier: catalog:ui
         version: 8.1.0(embla-carousel@8.6.0)
       markdown-it:
-        specifier: ^14.1.0
+        specifier: 'catalog:'
         version: 14.1.0
+      marked:
+        specifier: ^17.0.1
+        version: 17.0.1
       minisearch:
         specifier: catalog:util
         version: 7.2.0
@@ -327,6 +343,9 @@ importers:
       '@nuxt/hints':
         specifier: catalog:quality
         version: 1.0.0-alpha.2(magicast@0.5.1)(rolldown@1.0.0-beta.45)(vite@7.2.2(@types/node@24.9.2)(jiti@2.6.1)(sass-embedded@1.93.3)(sass@1.93.3)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1))(vue@3.5.25(typescript@5.9.3))
+      '@types/marked':
+        specifier: ^6.0.0
+        version: 6.0.0
       '@zinkawaii/stylelint-config':
         specifier: catalog:quality
         version: 0.3.4(postcss-html@1.8.0)(postcss@8.5.6)(stylelint@16.26.1(typescript@5.9.3))
@@ -2241,6 +2260,10 @@ packages:
 
   '@types/lodash@4.17.20':
     resolution: {integrity: sha512-H3MHACvFUEiujabxhaI/ImO6gUrd8oOurg7LQtS7mbwIXA/cUqWrvBsaeJ23aZEPk1TAYkurjfMbSELfoCXlGA==}
+
+  '@types/marked@6.0.0':
+    resolution: {integrity: sha512-jmjpa4BwUsmhxcfsgUit/7A9KbrC48Q0q8KvnY107ogcjGgTFDlIL3RpihNpx2Mu1hM4mdFQjoVc4O6JoGKHsA==}
+    deprecated: This is a stub types definition. marked provides its own type definitions, so you do not need this installed.
 
   '@types/mdast@4.0.4':
     resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
@@ -4468,6 +4491,11 @@ packages:
 
   markdown-table@3.0.4:
     resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
+
+  marked@17.0.1:
+    resolution: {integrity: sha512-boeBdiS0ghpWcSwoNm/jJBwdpFaMnZWRzjA6SkUMYb40SVaN1x7mmfGKp0jvexGcx+7y2La5zRZsYFZI6Qpypg==}
+    engines: {node: '>= 20'}
+    hasBin: true
 
   marky@1.3.0:
     resolution: {integrity: sha512-ocnPZQLNpvbedwTy9kNrQEsknEfgvcLMvOtz3sFeWApDq1MXH1TqkCIx58xlpESsfwQOnuBO9beyQuNGzVvuhQ==}
@@ -8884,6 +8912,10 @@ snapshots:
 
   '@types/lodash@4.17.20': {}
 
+  '@types/marked@6.0.0':
+    dependencies:
+      marked: 17.0.1
+
   '@types/mdast@4.0.4':
     dependencies:
       '@types/unist': 3.0.3
@@ -11465,6 +11497,8 @@ snapshots:
       uc.micro: 2.1.0
 
   markdown-table@3.0.4: {}
+
+  marked@17.0.1: {}
 
   marky@1.3.0: {}
 

@@ -2,9 +2,9 @@
 import type { WidgetName } from '~/composables/useWidgets'
 import { computed, watch } from 'vue'
 import { myFeed } from '~~/blog.config'
+import FlinkTopCard from '~/components/card/FlinkTopCard.vue'
 import FriendLinkCard from '~/components/partial/FriendLinkCard.vue'
 import feeds from '~/feeds'
-import FlinkTopCard from '~/components/card/FlinkTopCard.vue'
 
 const appConfig = useAppConfig()
 const layoutStore = useLayoutStore()
@@ -187,7 +187,7 @@ function showToast(message: string) {
 		</div>
 	</div>
 
-   <FlinkTopCard />
+	<FlinkTopCard />
 
 	<!-- 友链分类标签 -->
 	<div class="categories-section" style="margin-top: 2rem;">

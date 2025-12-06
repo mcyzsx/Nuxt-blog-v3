@@ -6,7 +6,9 @@ updated: 2025-08-18 03:27:42
 # image:
 type: story
 categories: [杂谈]
-tags: [AI]
+tags: [问题]
+
+recommend: 1
 
 references:
   - title: Chrome 恶意拓展 ModHeader 分析笔记
