@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import BlogWidget from '../blog/BlogWidget.vue'
+
 const poetryData = ref<{
 	content: string
 	author: string
@@ -41,7 +43,7 @@ onMounted(() => {
 </script>
 
 <template>
-<ZWidget card title="今日诗词">
+<BlogWidget card title="今日诗词">
 	<div v-if="error" class="error">
 		{{ error }}
 	</div>
@@ -56,7 +58,7 @@ onMounted(() => {
 	<div v-else class="loading">
 		正在加载今日诗词....
 	</div>
-</ZWidget>
+</BlogWidget>
 </template>
 
 <style lang="scss" scoped>

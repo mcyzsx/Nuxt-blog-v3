@@ -1,5 +1,7 @@
 import type { FeedEntry } from './app/types/feed'
 
+export { zhCN as dateLocale } from 'date-fns/locale/zh-CN'
+
 const basicConfig = {
 	title: 'ZSXの小站',
 	subtitle: '造化钟神秀，阴阳割昏晓。',
@@ -24,6 +26,7 @@ const basicConfig = {
 	favicon: '/image/avatar.webp',
 	language: 'zh-CN',
 	timeEstablished: '2025-11-28',
+	timeStart: '2025',
 	timezone: 'Asia/Shanghai',
 	url: 'https://blog.mcyzsx.top/',
 	defaultCategory: '未分类',

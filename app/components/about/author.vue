@@ -5,30 +5,30 @@ const appConfig = useAppConfig()
 </script>
 
 <template>
-    <div class="author-main" v-for="(aboutItem, aboutIndex) in about" :key="aboutIndex">
-        <div id="author-main" v-for="(author, authorIndex) in aboutItem.author":key="authorIndex">
-            <div class="author-tag-left" v-for="left in author.left" :key="left.tag1">
-                <span class="author-tag">{{ left.tag1 }}</span>
-                <span class="author-tag">{{ left.tag2 }}</span>
-                <span class="author-tag">{{ left.tag3 }}</span>
-                <span class="author-tag">{{ left.tag4 }}</span>
-            </div>
-            <div class="mainports" style="margin: 0 20px;">
-                <NuxtImg :src="appConfig.header.avatarFrame" class="avatarFrame" alt="头像框占位"/>
-                <div class="author-box" style="z-index:0">
-                    <div class="author-img">
-                        <img class="no-lightbox" :src="author.logo" style="width: 180px;">
-                    </div>
-                </div>
-            </div>
-            <div class="author-tag-right" v-for="right in author.right" :key="right.tag1">
-                <span class="author-tag">{{ right.tag1 }}</span>
-                <span class="author-tag">{{ right.tag2 }}</span>
-                <span class="author-tag">{{ right.tag3 }}</span>
-                <span class="author-tag">{{ right.tag4 }}</span>
-            </div>
-        </div>
-    </div>
+<div v-for="(aboutItem, aboutIndex) in about" :key="aboutIndex" class="author-main">
+	<div v-for="(author, authorIndex) in aboutItem.author" id="author-main":key="authorIndex">
+		<div v-for="left in author.left" :key="left.tag1" class="author-tag-left">
+			<span class="author-tag">{{ left.tag1 }}</span>
+			<span class="author-tag">{{ left.tag2 }}</span>
+			<span class="author-tag">{{ left.tag3 }}</span>
+			<span class="author-tag">{{ left.tag4 }}</span>
+		</div>
+		<div class="mainports" style="margin: 0 20px;">
+			<NuxtImg :src="appConfig.header.avatarFrame" class="avatarFrame" alt="" />
+			<div class="author-box" style="z-index:0">
+				<div class="author-img">
+					<img class="no-lightbox" :src="author.logo" style="width: 180px;">
+				</div>
+			</div>
+		</div>
+		<div v-for="right in author.right" :key="right.tag1" class="author-tag-right">
+			<span class="author-tag">{{ right.tag1 }}</span>
+			<span class="author-tag">{{ right.tag2 }}</span>
+			<span class="author-tag">{{ right.tag3 }}</span>
+			<span class="author-tag">{{ right.tag4 }}</span>
+		</div>
+	</div>
+</div>
 </template>
 
 <style lang="scss" scoped>
@@ -138,5 +138,4 @@ const appConfig = useAppConfig()
     height: 180px;
   }
 }
-
 </style>

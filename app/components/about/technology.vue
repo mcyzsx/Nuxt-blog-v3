@@ -31,18 +31,14 @@ import { about } from '../../about'
 </template>
 
 <style lang="scss" scoped>
-/* ==========  关键改动开始  ========== */
 .author-content-item.like-technology {
-  /* 1. 尺寸与 game 卡片完全一致 */
-  width: 59%;          /* 与 .game 保持一致 */
-  min-height: 300px;   /* 与 .game 保持一致 */
-
-  /* 2. 背景图重新适配：居中 + 覆盖 + 固定 */
-  background: url("https://sourceimage.s3.bitiful.net/img/default_cover_25.avif")
+  width: 59%;
+  min-height: 300px;
+  background: url("https://cdn.jsdelivr.net/gh/mcyzsx/picx-images-hosting@master/bizhi/1-(1).2yysjheizp.webp")
               no-repeat
-              center / cover;   /* center 保证主体居中，cover 保证铺满 */
+              center / cover;
+  color: #00BFFF;   /* 统一天蓝色 */
 }
-/* ==========  关键改动结束  ========== */
 
 /* 以下原有的样式保留，仅去掉和尺寸冲突的那一段 */
 .author-content-item {

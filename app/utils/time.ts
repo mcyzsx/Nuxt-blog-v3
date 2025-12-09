@@ -1,5 +1,6 @@
-import { differenceInMilliseconds } from 'date-fns'
+import { differenceInMilliseconds, format, formatDistanceToNow } from 'date-fns'
 import { toDate } from 'date-fns-tz'
+import { dateLocale } from '~~/blog.config'
 
 export function getLocaleDatetime(date: string | Date) {
 	const appConfig = useAppConfig()
@@ -40,6 +41,34 @@ const timeIntervals = [
 	{ label: '分', threshold: 1000 * 60 },
 	{ label: '秒', threshold: 1000 },
 ]
+
+export function getPostDate(date?: string | Date) {
+	if (!date)
+		return ''
+
+	const now = new Date()
+
+	const isWithinAWeek = differenceInMilliseconds(now, date) < 1000 * 60 * 60 * 24 * 7
+	if (isWithinAWeek) {
+		return formatDistanceToNow(date, { addSuffix: true, locale: dateLocale })
+	}
+	else if (isSameYear(now, date)) {
+		return format(date, 'M月d日')
+	}
+	else {
+		return format(date, 'yy年M月d日')
+	}
+}
+
+export function isSameYear(date1?: string | Date, date2?: string | Date) {
+	if (!date1 || !date2)
+		return false
+	if (typeof date1 === 'string')
+		date1 = new Date(date1)
+	if (typeof date2 === 'string')
+		date2 = new Date(date2)
+	return date1.getFullYear() === date2.getFullYear()
+}
 
 export function timeElapse(date: Date | string, maxDepth = 2) {
 	let timeString = ''

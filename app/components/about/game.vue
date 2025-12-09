@@ -30,11 +30,12 @@ import { about } from '../../about'
 <style lang="css" scoped>
 /* game */
 .author-content-item.game {
-    background: url(https://bcjyn0fc8o7wifyp.public.blob.vercel-storage.com/img/1567427018126688.jpg) no-repeat top;
+    background: url(https://cdn.jsdelivr.net/gh/mcyzsx/picx-images-hosting@master/bizhi/jihuang.webp) no-repeat top;
     background-size: cover;
     min-height: 300px;
     overflow: hidden;
     color: var(--heo-white);
     width: 59%;
+    color: #00BFFF;
 }
 </style>

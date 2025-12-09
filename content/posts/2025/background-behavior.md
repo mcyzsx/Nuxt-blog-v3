@@ -8,7 +8,7 @@ type: story
 categories: [杂谈]
 tags: [问题]
 
-recommend: 1
+recommend: 2
 
 references:
   - title: Chrome 恶意拓展 ModHeader 分析笔记

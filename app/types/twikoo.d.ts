@@ -1,32 +1,28 @@
 // types/twikoo.d.ts
-export interface TwikooCountItem {
-	url: string
-	count: number
-	total: number
-}
-
-export interface TwikooInstance {
-	init: (options: {
-		envId: string
-		el?: string | HTMLElement
-		region?: string
-		path?: string
-		lang?: string
-		/** 1.6.0+ 支持 */
-		onCommentLoaded?: () => void
-	}) => void
-	version: string
-
-	/* ===== 以下是我们需要用到但官方没给类型的 API ===== */
-	getCommentsCount: (opts: {
-		envId: string
-		urls?: string[]
-		region?: string
-	}) => Promise<TwikooCountItem[]>
-}
+export { }
 
 declare global {
 	interface Window {
-		twikoo?: TwikooInstance
+		twikoo?: Twikoo & {
+			getRecentComments?: (params: {
+				envId: string
+				pageSize?: number
+				[key: string]: any
+			}) => Promise<{ total: number }>
+			[key: string]: any
+		}
+		__twikooRenderOK?: boolean // 用于标记 Twikoo 渲染完成
 	}
+}
+
+interface Twikoo {
+	init: (options: {
+		envId: string
+		el: string
+		region?: string
+		path?: string
+		lang?: string
+		onLoad?: () => void // 渲染完成回调
+	}) => void
+	version: string
 }

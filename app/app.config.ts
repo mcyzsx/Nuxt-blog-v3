@@ -109,12 +109,22 @@ export default defineAppConfig({
 				{ icon: 'ph:archive-bold', text: '归档', url: '/archive' },
 				{ icon: 'ph:link-bold', text: '友链', url: '/link' },
 				{ icon: 'mdi:wechat', text: '朋友圈', url: '/fcircle' },
-				{ icon: 'mdi:pen', text: '日记', url: '/essays' },
+				{ icon: 'mdi:pen', text: '即刻短文', url: '/moments' },
 				{ icon: 'ph:devices-bold', text: '装备', url: '/devices' },
 				{ icon: 'icon-park-twotone:message', text: '留言板', url: '/message' },
+				{ icon: 'material-symbols:weather-hail-outline', text: '每日天气', url: '/weather' },
+				{ icon: 'typcn:news', text: '60S看世界', url: '/news' },
+				{ icon: 'ant-design:bilibili-outlined', text: 'B站热门', url: '/bilibili' },
+				{ icon: 'ri:bilibili-fill', text: '追番', url: '/banguim' },
+				{ icon: 'tabler:user', text: '关于我', url: '/about' },
 			],
 		},
 	] satisfies Nav,
+
+	other: {
+		Themes_Info: 'Clarity',
+		Themes_Version: `${version}`,
+	},
 
 	pagination: {
 		perPage: 10,

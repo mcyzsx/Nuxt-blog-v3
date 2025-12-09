@@ -100,29 +100,27 @@ export interface social {
 
 export const about: aboutConnect[] = [
 	{
-		author: [
-			{
-				left: [{
-					tag1: '💻 Like数码科技',
-					tag2: '🥣 干饭魂 干饭人',
-					tag3: '🕊 咕咕咕咕咕咕~',
-					tag4: '🧱 CV工程师',
-				}],
-				logo: 'https://sourceimage.s3.bitiful.net/myxz.avif',
-				right: [{
-					tag1: '吃饭不如碎觉 💤',
-					tag2: '乐观 积极 向上 🤝',
-					tag3: '专攻各种困难 🔨',
-					tag4: '人不狠话超多 💢',
-				}],
-			},
-		],
+		author: [{
+			left: [{
+				tag1: '💻 博客写作者',
+				tag2: '🥣 干饭魂 干饭人',
+				tag3: '🕊 咕咕咕咕咕咕~',
+				tag4: '⚒️ 自动化技术专业',
+			}],
+			logo: 'https://gravatar.mcyzsx.top/avatar/me',
+			right: [{
+				tag1: '吃饭不如碎觉 💤',
+				tag2: '乐观 积极 向上 🤝',
+				tag3: '活到老，学到老 🔨',
+				tag4: '空闲分享资源和教程 🌐',
+			}],
+		}],
 		large: '关于本站',
 		myinfo: [{
 			title1: '你好，很高兴认识你👋',
 			title2: '我叫',
-			inlineword1: '柒渊',
-			title3: '是一名 前端工程师、学生、',
+			inlineword1: '钟神秀',
+			title3: '是一名 小说爱好者、学生、',
 			inlineword2: '博主',
 			card: [{
 				tips: '追求',
@@ -132,37 +130,42 @@ export const about: aboutConnect[] = [
 				mask: [{
 					firstTips: '学习',
 					span: '生活',
-					up: '程序',
-					show: '体验',
+					up: '博客',
+					show: '小说',
 				}],
 			}],
 		}],
 		hello: 'Main Dis My Blogs',
 		social: [
-			{ href: 'https://github.com/661111', class: 'i-ph:github-logo-bold', name: 'Github' },
-			{ href: '', class: 'i-ph:tiktok-logo-bold', name: 'TikTok' },
+			{ href: 'https://github.com/mcyzsx', class: 'i-ph:github-logo-bold', name: 'Github' },
+			{ href: 'https://t.me/KemiaoJun', class: 'line-md:telegram', name: 'Telegram' },
+			{ href: 'https://space.bilibili.com/3546643173477234', class: 'i-meteor-icons:bilibili', name: 'Bilibili' },
+			{ href: 'https://x.com/kemiao', class: 'i-iconoir:x', name: 'X' },
+			{ href: 'https://qm.qq.com/q/Ha1GZQtMgE', class: 'i-ri:qq-line', name: 'QQ' },
+			{ href: 'mailto:me@mcyzsx.top', class: 'i-mdi:email-outline', name: 'Email' },
+			{ href: 'https://music.163.com/#/playlist?id=13681647281', class: 'i-ri:netease-cloud-music-line', name: '网易云' },
 		],
 		maxim: [{
 			tip: '座右铭',
-			title1: '生活明朗，',
-			title2: '万物可爱。',
+			title1: '造化钟神秀，',
+			title2: '阴阳割昏晓。',
 		}],
 		technology: [{
 			tip: '关注偏好',
-			title: '数码科技',
-			bottomTip: '手机、电脑软硬件',
+			title: '博客写作及完善',
+			bottomTip: '资源分享、小说阅读',
 		}],
 		game: [{
 			tip: '爱好游戏',
-			title: '使命召唤',
-			uid: '',
-			image: '',
+			title: '饥荒',
+			uid: 'Krylin',
+			image: 'https://cdn.jsdelivr.net/gh/mcyzsx/picx-images-hosting@master/bizhi/jihuang.webp',
 		}],
 		single: [{
-			tip: '心路历程',
-			title: '为何而建站',
-			lishi: '『莫言小栈』历史进程',
-			content: '『莫言小栈』是综合类型博客，集成文章、说说、友链、留言、装备等栏目。目前魔改内容已经公开，可进行使用需署名。',
+			tip: '建站历程',
+			title: '魔改建站教程',
+			lishi: '『ZSXの小站』的魔改进程',
+			content: '『ZSXの小站』的魔改记录',
 		}],
 	},
 ]

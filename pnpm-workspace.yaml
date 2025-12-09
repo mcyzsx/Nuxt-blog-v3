@@ -1,6 +1,14 @@
 packages:
   - packages/*
 
+catalog:
+  '@types/marked': ^6.0.0
+  aplayer: ^1.10.1
+  cheerio: ^1.1.2
+  dayjs: 1.11.19
+  markdown-it: ^14.1.0
+  marked: ^17.0.1
+
 catalogs:
   content:
     '@nuxt/content': ^3.8.2
@@ -84,10 +92,3 @@ patchedDependencies:
   playwright-core: patches/playwright-core.patch
 
 shamefullyHoist: true
-catalog:
-  '@types/marked': ^6.0.0
-  aplayer: ^1.10.1
-  cheerio: ^1.1.2
-  dayjs: ^1.11.19
-  markdown-it: ^14.1.0
-  marked: ^17.0.1

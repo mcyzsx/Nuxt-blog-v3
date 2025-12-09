@@ -10,7 +10,7 @@ useSeoMeta({
 })
 
 const layoutStore = useLayoutStore()
-layoutStore.setAside(['blog-stats', 'blog-tech', 'announcement-card', 'work-status', 'latest-comments', 'comm-group', 'poetry'])
+layoutStore.setAside(['blog-stats', 'blog-tech', 'announcement-card', 'work-status', 'latest-comments', 'comm-group', 'history-today', 'poetry'])
 
 const listRaw = useArticleIndexOptions() // Readonly<Ref<...>>
 
