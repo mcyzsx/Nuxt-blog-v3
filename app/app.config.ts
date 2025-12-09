@@ -90,6 +90,7 @@ export default defineAppConfig({
 		showTitle: true,
 		subtitle: blogConfig.subtitle,
 		emojiTail: ['📄', '🦌', '🙌', '🐟', '🏖️'],
+		avatarFrame: '/image/touxiangkuang.png',
 	},
 
 	/** 友链页面 */
