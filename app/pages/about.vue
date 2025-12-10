@@ -24,7 +24,12 @@
         <Skillinfo />
       </div>
 
-      <!-- 第 4 行：社交卡片（已重构） -->
+      <!-- 第 4 行：音乐播放器 -->
+      <div class="author-content">
+        <AboutMusicPlayer />
+      </div>
+
+      <!-- 第 5 行：社交卡片（已重构） -->
       <div class="author-content">
         <div class="author-content-item social">
           <h3 class="author-title">联系我</h3>
@@ -69,18 +74,18 @@
         </div>
       </div>
 
-      <!-- 第 5 行：技术 + 游戏 -->
+      <!-- 第 6 行：技术 + 游戏 -->
       <div class="author-content row">
         <Technology />
         <Game />
       </div>
 
-      <!-- 第 6 行：站点统计 -->
+      <!-- 第 7 行：站点统计 -->
       <div class="author-content">
         <Umami />
       </div>
 
-      <!-- 第 7 行：单曲 -->
+      <!-- 第 8 行：单曲 -->
       <div class="author-content">
         <Single />
       </div>
@@ -95,6 +100,7 @@ import Author from '~/components/about/author.vue'
 import Game from '~/components/about/game.vue'
 import Maxim from '~/components/about/maxim.vue'
 import MyInfoAndSayHello from '~/components/about/myInfoAndSayHello.vue'
+import AboutMusicPlayer from '~/components/about/musicPlayer.vue'
 import Umami from '~/components/about/umami.vue'
 import Single from '~/components/about/single.vue'
 import Skillinfo from '~/components/about/skillinfo.vue'

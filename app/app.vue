@@ -30,7 +30,7 @@ onMounted(() => {
 <BlogPopover />
 
 <!-- 音乐播放器 - 使用原生HTML确保正确初始化 -->
-<ClientOnly>
+<!-- <ClientOnly>
 	<div
 		v-if="showPlayer"
 		class="netease-mini-player"
@@ -41,7 +41,7 @@ onMounted(() => {
 		data-lyric="true"
 		data-autoplay="false"
 	/>
-</ClientOnly>
+</ClientOnly> -->
 </template>
 
 <!-- eslint-disable-next-line vue/enforce-style-attribute -->
