@@ -22,8 +22,8 @@ useSeoMeta({
 
 // API 配置常量
 const API_CONFIG = {
-  MEMO_API: 'https://moment-api.mcyzsx.top/api/memo/list',
-  USER_API: 'https://moment-api.mcyzsx.top/api/user/profile',
+	MEMO_API: 'https://moment-api.mcyzsx.top/api/memo/list',
+	USER_API: 'https://moment-api.mcyzsx.top/api/user/profile',
 	PAGE_SIZE: 30,
 }
 // ---------- 新增：用户信息状态管理 ----------
@@ -44,7 +44,10 @@ async function fetchUserProfile() {
 		userState.value.loading = true
 		userState.value.error = false
 
-		const data = await $fetch<{ code: number; data?: UserProfile }>(API_CONFIG.USER_API)
+		const data = await $fetch<{ code: number; data?: UserProfile }>(API_CONFIG.USER_API, {
+			method: 'POST',
+			body: {},
+		})
 		if (data.code === 0 && data.data) {
 			userState.value.data = data.data as UserProfile
 		}
@@ -240,7 +243,10 @@ async function fetchTalks() {
 	try {
 		talksState.value.loading = true
 		talksState.value.error = false
-		const data = await $fetch<{ code: number; data?: { list?: any[] } }>(API_CONFIG.MEMO_API)
+		const data = await $fetch<{ code: number; data?: { list?: any[] } }>(API_CONFIG.MEMO_API, {
+			method: 'POST',
+			body: { size: API_CONFIG.PAGE_SIZE },
+		})
 		if (data.code === 0 && data.data?.list) {
 			const formattedTalks = data.data.list.map((item: any) => ({
 				content: formatContent(item),
