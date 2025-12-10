@@ -50,7 +50,7 @@ export const creativityData: CreativityData[] = [
 			},
 			{
 				name: 'Node',
-				color: '#333',
+				color: '#fff',
 				icon: 'https://cdn.jsdelivr.net/gh/mcyzsx/picx-images-hosting@master/custom/Nodejs.7pqvb9wtd.webp',
 			},
 			{
