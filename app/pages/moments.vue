@@ -243,10 +243,7 @@ async function fetchTalks() {
 	try {
 		talksState.value.loading = true
 		talksState.value.error = false
-		const data = await $fetch<{ code: number; data?: { list?: any[] } }>(API_CONFIG.MEMO_API, {
-			method: 'POST',
-			body: { size: API_CONFIG.PAGE_SIZE },
-		})
+		const data = await $fetch<{ code: number; data?: { list?: any[] } }>(API_CONFIG.MEMO_API)
 		if (data.code === 0 && data.data?.list) {
 			const formattedTalks = data.data.list.map((item: any) => ({
 				content: formatContent(item),

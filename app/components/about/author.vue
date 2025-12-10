@@ -45,7 +45,6 @@ const appConfig = useAppConfig()
   display: -moz-box;
   display: -webkit-flex;
   display: -ms-flexbox;
-  display: box;
   display: flex;
   -webkit-box-align: center;
   -moz-box-align: center;
