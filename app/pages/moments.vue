@@ -44,10 +44,7 @@ async function fetchUserProfile() {
 		userState.value.loading = true
 		userState.value.error = false
 
-		const data = await $fetch<{ code: number; data?: UserProfile }>(API_CONFIG.USER_API, {
-			method: 'POST',
-			body: {},
-		})
+		const data = await $fetch<{ code: number; data?: UserProfile }>(API_CONFIG.USER_API)
 		if (data.code === 0 && data.data) {
 			userState.value.data = data.data as UserProfile
 		}
