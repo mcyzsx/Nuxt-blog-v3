@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import sponsorData from '~/sponsor'
+
 const appConfig = useAppConfig()
 const layoutStore = useLayoutStore()
 
@@ -10,14 +12,7 @@ useSeoMeta({
   ogType: 'website',
 })
 
-interface SponsorItem {
-  name: string
-  amount: string
-  date?: string
-  avatar?: string
-}
-
-const sponsors: SponsorItem[] = []
+const sponsors = sponsorData.sponsors
 </script>
 
 <template>
