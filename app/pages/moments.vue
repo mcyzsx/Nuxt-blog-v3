@@ -22,8 +22,8 @@ useSeoMeta({
 
 // API 配置常量
 const API_CONFIG = {
-	MEMO_API: '/api/memo/list',
-	USER_API: '/api/user/profile',
+	MEMO_API: '/api/moments',
+	USER_API: '/api/moments-user',
 	PAGE_SIZE: 30,
 }
 // ---------- 新增：用户信息状态管理 ----------
