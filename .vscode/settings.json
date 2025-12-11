@@ -41,5 +41,6 @@
   "yaml.format.singleQuote": true,
   "codingcopilot.enableCompletionLanguage": {
     "scmInput": false
-  }
+},
+"Codegeex.RepoIndex": true
 }

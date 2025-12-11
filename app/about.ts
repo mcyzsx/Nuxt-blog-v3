@@ -8,6 +8,7 @@ export interface aboutConnect {
 	game: game[] // 游戏数据
 	single: single[] // 历程数据
 	social: social[]
+	music: music[] // 音乐数据
 }
 
 // 头像数据
@@ -98,6 +99,15 @@ export interface social {
 	name: string
 }
 
+// 音乐数据
+export interface music {
+	tip: string
+	title: string
+	server: string
+	type: string
+	id: string
+}
+
 export const about: aboutConnect[] = [
 	{
 		author: [{
@@ -166,6 +176,13 @@ export const about: aboutConnect[] = [
 			title: '魔改建站记录',
 			lishi: '『ZSXの小站』的魔改进程',
 			content: '『ZSXの小站』的魔改记录',
+		}],
+		music: [{
+			tip: '音乐收藏',
+			title: '我的网易云播放列表',
+			server: 'netease',
+			type: 'playlist',
+			id: '13681647281',
 		}],
 	},
 ]
