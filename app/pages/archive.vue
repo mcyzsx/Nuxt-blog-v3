@@ -253,7 +253,6 @@ onClickOutside(tagDropdownRef, () => {
 			</Transition>
 		</div>
 
-<<<<<<< HEAD
 		<!-- 标签筛选 -->
 		<div v-if="tags && tags.length > 0" ref="tagDropdownRef" class="category-dropdown">
 			<div
