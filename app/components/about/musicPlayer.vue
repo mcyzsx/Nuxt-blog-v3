@@ -63,6 +63,13 @@ onMounted(async () => {
   }
 })
 
+// 刷新页面函数
+const reloadPage = () => {
+  if (import.meta.client) {
+    window.location.reload()
+  }
+}
+
 // 确保脚本加载的函数
 const ensureScriptLoaded = async () => {
   // 检查脚本是否已经加载
@@ -148,7 +155,7 @@ const ensureScriptLoaded = async () => {
       <!-- 错误状态 -->
       <div v-else-if="error" class="player-error">
         <p class="error-message">{{ error }}</p>
-        <button @click="window.location.reload()" class="retry-button">刷新页面</button>
+        <button @click="reloadPage" class="retry-button">刷新页面</button>
       </div>
       
       <!-- 正常播放器 -->
