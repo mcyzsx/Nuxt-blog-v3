@@ -119,56 +119,55 @@ layoutStore.setAside(['blog-stats', 'weather', 'blog-tech', 'latest-comments', '
 /* ----------------- 客户端脚本 ----------------- */
 onMounted(async () => {
   if (process.client) {
-    function loadScript(url: string, callback?: () => void): Promise<void> {
-      return new Promise<void>((resolve, reject) => {
-        // 检查脚本是否已加载
-        const existingScript = document.querySelector(`script[src="${url}"]`)
-        if (existingScript) {
-          callback?.()
-          resolve()
-          return
-        }
-
-        const script = document.createElement('script')
-        script.src = url
-        script.type = 'text/javascript'
-        script.async = true
-        script.crossOrigin = 'anonymous' // 添加跨域支持
+    // 直接内联实现关于页面的功能，避免外部脚本加载问题
+    const initAboutPage = () => {
+      try {
+        // 滚动显示效果
+        let pursuitInterval: NodeJS.Timeout | null = null
         
-        script.onload = () => {
-          try {
-            callback?.()
-            resolve()
-          } catch (error) {
-            console.warn(`脚本回调执行失败: ${url}`, error)
-            resolve() // 仍然 resolve，避免阻塞
+        const startScrollEffect = () => {
+          const show = document.querySelector('span[data-show]')
+          const next = show?.nextElementSibling || document.querySelector('.first-tips')
+          const up = document.querySelector('span[data-up]')
+          
+          if (up) {
+            up.removeAttribute('data-up')
+          }
+          
+          if (show) {
+            show.removeAttribute('data-show')
+            show.setAttribute('data-up', '')
+          }
+          
+          if (next) {
+            next.setAttribute('data-show', '')
           }
         }
         
-        script.onerror = (error) => {
-          console.error(`脚本加载失败: ${url}`, error)
-          reject(new Error(`Failed to load script: ${url}`))
-        }
-
-        // 设置超时机制
-        setTimeout(() => {
-          if (!script.onload.called && !script.onerror.called) {
-            console.warn(`脚本加载超时: ${url}`)
-            reject(new Error(`Script load timeout: ${url}`))
+        // 启动滚动效果
+        pursuitInterval = setInterval(startScrollEffect, 2000)
+        
+        // 清理函数
+        return () => {
+          if (pursuitInterval) {
+            clearInterval(pursuitInterval)
+            pursuitInterval = null
           }
-        }, 10000) // 10秒超时
-
-        document.head.appendChild(script)
-      })
+        }
+      } catch (error) {
+        console.error('关于页面功能初始化失败:', error)
+      }
     }
-
-    try {
-      await loadScript('/js/about.js')
-      console.log('关于页面脚本加载成功')
-    } catch (error) {
-      console.error('关于页面脚本加载失败:', error)
-      // 可以在这里添加备用逻辑或用户提示
-    }
+    
+    // 初始化功能
+    const cleanup = initAboutPage()
+    
+    // 组件卸载时清理
+    onUnmounted(() => {
+      cleanup?.()
+    })
+    
+    console.log('关于页面功能初始化成功')
   }
 })
 </script>
