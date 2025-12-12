@@ -16,7 +16,7 @@ const basicConfig = {
 		name: '钟神秀',
 		avatar: 'https://gravatar.mcyzsx.top/avatar/me',
 		email: 'me@mcyzsx.top',
-		homepage: 'https://www.mcyzsx.top/',
+		homepage: 'https://home.mcyzsx.top/',
 	},
 	copyright: {
 		abbr: 'CC BY-NC-SA 4.0',
