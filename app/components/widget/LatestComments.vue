@@ -142,7 +142,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-<ZWidget>
+<BlogWidget>
 	<template #title>
 		<span class="title">最新评论</span>
 		<Icon name="ph:chat-circle-text-bold" />
@@ -187,7 +187,7 @@ onUnmounted(() => {
 			</ul>
 		</Transition>
 	</div>
-</ZWidget>
+</BlogWidget>
 </template>
 
 <style lang="scss" scoped>

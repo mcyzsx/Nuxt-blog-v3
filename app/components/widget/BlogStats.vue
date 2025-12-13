@@ -39,7 +39,7 @@ onMounted(async () => {
 </script>
 
 <template>
-<ZWidget title="博客统计">
+<BlogWidget title="博客统计">
 	<div class="blog-stats">
 		<div v-for="(stat, index) in blogStats" :key="index" class="stat-item">
 			<div class="stat-icon">
@@ -55,115 +55,115 @@ onMounted(async () => {
 			</div>
 		</div>
 	</div>
-</ZWidget>
+</BlogWidget>
 </template>
 
 <style lang="scss" scoped>
 .blog-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
 }
 
 .stat-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem;
-  border-radius: 12px;
-  background: linear-gradient(135deg, rgba(var(--c-bg-soft-rgb), 0.8) 0%, rgba(var(--c-bg-card-rgb), 0.9) 100%);
-  border: 1px solid var(--c-border);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	position: relative;
+	padding: 0.75rem;
+	border: 1px solid var(--c-border);
+	border-radius: 12px;
+	background: linear-gradient(135deg, rgb(var(--c-bg-soft-rgb), 0.8) 0%, rgb(var(--c-bg-card-rgb), 0.9) 100%);
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(135deg, rgba(var(--c-primary-rgb), 0.1) 0%, rgba(var(--c-bg-card-rgb), 0.95) 100%);
-  }
+	&:hover {
+		box-shadow: 0 4px 16px rgb(0 0 0 / 10%);
+		background: linear-gradient(135deg, rgb(var(--c-primary-rgb), 0.1) 0%, rgb(var(--c-bg-card-rgb), 0.95) 100%);
+		transform: translateY(-2px);
+	}
 }
 
 .stat-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--c-bg-soft) 0%, var(--c-bg-card) 100%);
-  border: 1px solid var(--c-border);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.5rem;
+	height: 2.5rem;
+	border: 1px solid var(--c-border);
+	border-radius: 10px;
+	background: linear-gradient(135deg, var(--c-bg-soft) 0%, var(--c-bg-card) 100%);
 
-  :deep(svg) {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
+	:deep(svg) {
+		width: 1.25rem;
+		height: 1.25rem;
+	}
 }
 
 .stat-content {
-  flex: 1;
-  min-width: 0;
+	flex: 1;
+	min-width: 0;
 }
 
 .stat-value {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--c-text);
-  line-height: 1.2;
-  margin-bottom: 0.25rem;
+	margin-bottom: 0.25rem;
+	font-size: 1.1rem;
+	font-weight: 500;
+	line-height: 1.2;
+	color: var(--c-text);
 }
 
 .stat-label {
-  font-size: 0.85rem;
-  color: var(--c-text-2);
-  font-weight: 400;
+	font-size: 0.85rem;
+	font-weight: 400;
+	color: var(--c-text-2);
 }
 
 .stat-tooltip {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 50%;
-  background: rgba(var(--c-text-2-rgb), 0.1);
-  color: var(--c-text-2);
-  cursor: help;
-  transition: all 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius: 50%;
+	background: rgb(var(--c-text-2-rgb), 0.1);
+	color: var(--c-text-2);
+	transition: all 0.2s ease;
+	cursor: help;
 
-  &:hover {
-    background: rgba(var(--c-primary-rgb), 0.1);
-    color: var(--c-primary);
-  }
+	&:hover {
+		background: rgb(var(--c-primary-rgb), 0.1);
+		color: var(--c-primary);
+	}
 
-  :deep(svg) {
-    width: 0.875rem;
-    height: 0.875rem;
-  }
+	:deep(svg) {
+		width: 0.875rem;
+		height: 0.875rem;
+	}
 }
 
 /* 响应式设计 */
 @media (max-width: 768px) {
-  .stat-item {
-    padding: 0.625rem;
-    gap: 0.625rem;
-  }
+	.stat-item {
+		gap: 0.625rem;
+		padding: 0.625rem;
+	}
 
-  .stat-icon {
-    width: 2.25rem;
-    height: 2.25rem;
+	.stat-icon {
+		width: 2.25rem;
+		height: 2.25rem;
 
-    :deep(svg) {
-      width: 1.125rem;
-      height: 1.125rem;
-    }
-  }
+		:deep(svg) {
+			width: 1.125rem;
+			height: 1.125rem;
+		}
+	}
 
-  .stat-value {
-    font-size: 1rem;
-  }
+	.stat-value {
+		font-size: 1rem;
+	}
 
-  .stat-label {
-    font-size: 0.8rem;
-  }
+	.stat-label {
+		font-size: 0.8rem;
+	}
 }
 </style>

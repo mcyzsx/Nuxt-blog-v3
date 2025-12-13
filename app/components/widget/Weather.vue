@@ -61,7 +61,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-<ZWidget>
+<BlogWidget>
 	<template #title>
 		<span class="title">天气速览</span>
 		<Icon name="ph:cloud-sun-bold" />
@@ -95,58 +95,62 @@ onUnmounted(() => {
 	<p v-else class="weather-tip">
 		暂无天气信息
 	</p>
-</ZWidget>
+</BlogWidget>
 </template>
 
 <style lang="scss" scoped>
 :deep(.widget-body) {
-  padding: 0.8rem 1rem;
-  font-size: 0.95em;
-  color: var(--c-text);
+	padding: 0.8rem 1rem;
+	font-size: 0.95em;
+	color: var(--c-text);
 }
 
 .title {
-  flex-grow: 1;
+	flex-grow: 1;
 }
 
 .weather-tip {
-  text-align: center;
-  padding: 1em 0;
-  color: var(--c-text-2);
-  &.error {
-    color: var(--c-danger);
-  }
+	padding: 1em 0;
+	text-align: center;
+	color: var(--c-text-2);
+
+	&.error {
+		color: var(--c-danger);
+	}
 }
 
 .weather-body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.6rem;
 }
 
 .weather-main {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-  .temp {
-    font-size: 1.8em;
-    font-weight: 600;
-    color: var(--c-primary);
-  }
-  .text {
-    font-size: 1em;
-    opacity: 0.9;
-  }
+	display: flex;
+	align-items: baseline;
+	gap: 0.5rem;
+
+	.temp {
+		font-size: 1.8em;
+		font-weight: 600;
+		color: var(--c-primary);
+	}
+
+	.text {
+		opacity: 0.9;
+		font-size: 1em;
+	}
 }
 
 .weather-details {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  font-size: 0.88em;
-  opacity: 0.8;
-  > div {
-    flex: 1 1 auto;
-  }
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.8rem;
+	opacity: 0.8;
+	font-size: 0.88em;
+
+	> div {
+		flex: 1 1 auto;
+	}
 }
 </style>

@@ -34,7 +34,7 @@ onMounted(async () => {
 </script>
 
 <template>
-<ZWidget card title="历史上的今天">
+<BlogWidget card title="历史上的今天">
 	<div v-if="loading" class="history-loading">
 		加载中…
 	</div>
@@ -60,116 +60,121 @@ onMounted(async () => {
 			</div>
 		</li>
 	</ul>
-</ZWidget>
+</BlogWidget>
 </template>
 
 <style lang="scss" scoped>
 .history-loading {
-  text-align: center;
-  padding: 2rem 0;
-  color: var(--c-text-2);
-  font-size: 0.9rem;
+	padding: 2rem 0;
+	font-size: 0.9rem;
+	text-align: center;
+	color: var(--c-text-2);
 }
 
 .history-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 .history-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
-  border-radius: 0.6rem;
-  background: rgba(var(--c-bg-soft-rgb), 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(var(--c-border-rgb), 0.12);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  }
+	display: flex;
+	align-items: flex-start;
+	gap: 0.75rem;
+	padding: 0.75rem 1rem;
+	border: 1px solid rgb(var(--c-border-rgb), 0.12);
+	border-radius: 0.6rem;
+	background: rgb(var(--c-bg-soft-rgb), 0.7);
+	backdrop-filter: blur(12px);
+	transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+	&:hover {
+		box-shadow: 0 4px 12px rgb(0 0 0 / 5%);
+		transform: translateY(-2px);
+	}
 }
 
 .history-icon {
-  font-size: 1.3rem;
-  line-height: 1;
-  flex-shrink: 0;
-  margin-top: 2px;
+	flex-shrink: 0;
+	margin-top: 2px;
+	font-size: 1.3rem;
+	line-height: 1;
 }
 
 .history-main {
-  flex: 1;
-  min-width: 0;
+	flex: 1;
+	min-width: 0;
 }
 
 .history-title {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-  font-weight: 600;
-  color: var(--c-text-1);
-  margin-bottom: 0.25rem;
+	display: flex;
+	align-items: baseline;
+	gap: 0.5rem;
+	margin-bottom: 0.25rem;
+	font-weight: 600;
+	color: var(--c-text-1);
 }
 
 .history-year {
-  font-size: 0.85rem;
-  color: var(--c-primary);
-  white-space: nowrap;
+	font-size: 0.85rem;
+	white-space: nowrap;
+	color: var(--c-primary);
 }
 
 .history-text {
-  font-size: 0.95rem;
-  line-height: 1.4;
+	font-size: 0.95rem;
+	line-height: 1.4;
 }
 
 .history-desc {
-  margin: 0.25rem 0 0.4rem;
-  font-size: 0.85rem;
-  color: var(--c-text-2);
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+	display: -webkit-box;
+	overflow: hidden;
+	margin: 0.25rem 0 0.4rem;
+	font-size: 0.85rem;
+	-webkit-line-clamp: 2;
+	line-height: 1.5;
+	color: var(--c-text-2);
+	-webkit-box-orient: vertical;
 }
 
 .history-link {
-  font-size: 0.8rem;
-  color: var(--c-primary);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  transition: opacity 0.2s;
-  &:hover {
-    opacity: 0.8;
-  }
+	font-size: 0.8rem;
+	text-decoration: underline;
+	color: var(--c-primary);
+	transition: opacity 0.2s;
+	text-underline-offset: 2px;
+
+	&:hover {
+		opacity: 0.8;
+	}
 }
 
 @media (max-width: 768px) {
-  .history-item {
-    padding: 0.6rem 0.8rem;
-  }
-  .history-year {
-    font-size: 0.8rem;
-  }
-  .history-text {
-    font-size: 0.9rem;
-  }
-  .history-desc {
-    font-size: 0.8rem;
-  }
+	.history-item {
+		padding: 0.6rem 0.8rem;
+	}
+
+	.history-year {
+		font-size: 0.8rem;
+	}
+
+	.history-text {
+		font-size: 0.9rem;
+	}
+
+	.history-desc {
+		font-size: 0.8rem;
+	}
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .history-item,
-  .history-item:hover {
-    transform: none !important;
-    transition: none !important;
-  }
+	.history-item,
+	.history-item:hover {
+		transform: none !important;
+		transition: none !important;
+	}
 }
 </style>
