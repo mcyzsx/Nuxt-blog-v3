@@ -3,7 +3,6 @@ const showPlayer = ref(false)
 
 // 导入组件
 import SimpleParticles from '~/components/util/SimpleParticles.vue'
-import TestComponent from '~/components/util/TestComponent.vue'
 
 onMounted(() => {
 	// 确保在客户端显示播放器
@@ -24,7 +23,6 @@ onMounted(() => {
 <BlogSkipToContent />
 <BlogSidebar />
 <SimpleParticles />
-<TestComponent />
 <div id="content">
 	<main id="main-content">
 		<NuxtPage />
