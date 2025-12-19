@@ -1,35 +1,16 @@
 <template>
-  <div class="particles" ref="particlesRef"></div>
+  <div class="particles" ref="particlesRef">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
 </template>
 
 <script setup>
-const particlesRef = ref(null);
-
 onMounted(() => {
-  if (!particlesRef.value) return;
-  
-  // 创建多个粒子元素
-  for (let i = 0; i < 30; i++) {
-    const particle = document.createElement('div');
-    particle.className = 'particle';
-    
-    // 随机大小
-    const size = Math.random() * 10 + 5;
-    particle.style.width = `${size}px`;
-    particle.style.height = `${size}px`;
-    
-    // 随机位置
-    particle.style.left = `${Math.random() * 100}%`;
-    particle.style.top = `${Math.random() * 100}%`;
-    
-    // 随机动画延迟
-    particle.style.animationDelay = `${Math.random() * 5}s`;
-    
-    // 随机动画持续时间
-    particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
-    
-    particlesRef.value.appendChild(particle);
-  }
+  console.log('SimpleParticles component mounted');
 });
 </script>
 
@@ -41,16 +22,48 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 1;
+  z-index: 100;
   overflow: hidden;
 }
 
 .particle {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 215, 0, 0.8);
   border-radius: 50%;
   animation: float linear infinite;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+  width: 10px;
+  height: 10px;
+}
+
+.particle:nth-child(1) {
+  left: 10%;
+  animation-duration: 8s;
+  animation-delay: 0s;
+}
+
+.particle:nth-child(2) {
+  left: 30%;
+  animation-duration: 12s;
+  animation-delay: 1s;
+}
+
+.particle:nth-child(3) {
+  left: 50%;
+  animation-duration: 10s;
+  animation-delay: 2s;
+}
+
+.particle:nth-child(4) {
+  left: 70%;
+  animation-duration: 15s;
+  animation-delay: 3s;
+}
+
+.particle:nth-child(5) {
+  left: 90%;
+  animation-duration: 11s;
+  animation-delay: 4s;
 }
 
 @keyframes float {

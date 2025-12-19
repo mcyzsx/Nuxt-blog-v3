@@ -7,11 +7,15 @@
 <style scoped>
 .test-component {
   position: fixed;
-  top: 0;
-  left: 0;
-  background-color: rgba(255, 0, 0, 0.5);
+  top: 100px;
+  right: 20px;
+  background-color: rgba(255, 0, 0, 0.9);
   color: white;
-  padding: 10px;
-  z-index: 9999;
+  padding: 20px;
+  z-index: 99999;
+  font-size: 18px;
+  font-weight: bold;
+  border: 2px solid white;
+  border-radius: 5px;
 }
 </style>
