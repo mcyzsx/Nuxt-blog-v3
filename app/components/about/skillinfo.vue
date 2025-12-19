@@ -46,6 +46,9 @@ import { creativityData } from '../../creativity'
       border-color: color-mix(in srgb, currentcolor 10%, transparent);
       background-color: color-mix(in srgb, currentcolor 5%, transparent);
       color: color-mix(in srgb, currentcolor 80%, transparent);
+      flex-grow: 0; /* 确保卡片不会过度增长 */
+      flex-shrink: 0; /* 确保卡片不会被压缩 */
+      min-width: fit-content; /* 确保卡片宽度适应内容 */
 
       .creativityIcon {
         width: 30px;
@@ -56,10 +59,70 @@ import { creativityData } from '../../creativity'
         justify-content: center;
         margin-right: 8px;
         user-select: none;
+        flex-shrink: 0; /* 确保图标不会被压缩 */
 
         img {
           width: 18px;
           height: 18px;
+        }
+      }
+      
+      .creativityTitle {
+        white-space: nowrap; /* 防止标题换行 */
+        overflow: visible; /* 确保文字完全可见 */
+      }
+    }
+  }
+}
+
+/* 平板端样式优化 */
+@media (max-width: 1024px) {
+  .creativityMain {
+    .author-content-item-list {
+      .cardInfo {
+        padding: 0.4rem 0.8rem;
+        min-width: fit-content;
+        
+        .creativityIcon {
+          width: 28px;
+          height: 28px;
+          margin-right: 6px;
+          
+          img {
+            width: 16px;
+            height: 16px;
+          }
+        }
+        
+        .creativityTitle {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
+
+/* 手机端样式优化 */
+@media (max-width: 768px) {
+  .creativityMain {
+    .author-content-item-list {
+      gap: 4px;
+      .cardInfo {
+        padding: 0.35rem 0.7rem;
+        
+        .creativityIcon {
+          width: 26px;
+          height: 26px;
+          margin-right: 5px;
+          
+          img {
+            width: 14px;
+            height: 14px;
+          }
+        }
+        
+        .creativityTitle {
+          font-size: 0.85rem;
         }
       }
     }
