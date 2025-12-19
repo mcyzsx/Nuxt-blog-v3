@@ -70,6 +70,7 @@ import { creativityData } from '../../creativity'
       .creativityTitle {
         white-space: nowrap; /* 防止标题换行 */
         overflow: visible; /* 确保文字完全可见 */
+        color: var(--c-text-1); /* 确保文字颜色清晰可见 */
       }
     }
   }
@@ -80,13 +81,18 @@ import { creativityData } from '../../creativity'
   .creativityMain {
     .author-content-item-list {
       .cardInfo {
-        padding: 0.4rem 0.8rem;
+        padding: 0.4rem 1rem;
         min-width: fit-content;
+        max-width: none;
+        width: auto;
+        display: inline-flex;
+        overflow: visible;
         
         .creativityIcon {
           width: 28px;
           height: 28px;
-          margin-right: 6px;
+          margin-right: 8px;
+          flex-shrink: 0;
           
           img {
             width: 16px;
@@ -96,6 +102,35 @@ import { creativityData } from '../../creativity'
         
         .creativityTitle {
           font-size: 0.9rem;
+          white-space: nowrap;
+          overflow: visible;
+          color: var(--c-text-1);
+        }
+      }
+    }
+  }
+}
+
+/* 特定平板尺寸优化 */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .creativityMain {
+    .author-content-item-list {
+      width: 100%;
+      justify-content: flex-start;
+      .cardInfo {
+        padding: 0.4rem 1.2rem;
+        width: auto;
+        flex: 0 0 auto;
+        
+        .creativityIcon {
+          width: 28px;
+          height: 28px;
+          margin-right: 10px;
+        }
+        
+        .creativityTitle {
+          font-size: 0.95rem;
+          color: var(--c-text-1);
         }
       }
     }
