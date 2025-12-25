@@ -3,7 +3,7 @@ title: Umami博客访问统计Vercel+Cloudflare Wokers部署
 description: Umami博客访问统计Vercel+Cloudflare Wokers部署教程，附带效果图展示。
 date: 2025-04-07 17:11:28
 updated: 2025-04-07 23:09:14
-# image: https://i1.wp.com/dev.ruom.top/i/2025/04/07/951842.webp
+image: https://cdn.jsdelivr.net/gh/zsxcoder/picx-images-hosting@master/cover/Canvas-Ruom-(1).2ksdy52g0g.webp
 tags: [markdown语法, 网站统计]
 categories: [技术分享]
 ---
