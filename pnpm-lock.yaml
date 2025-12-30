@@ -53,7 +53,7 @@ catalogs:
       specifier: ^14.1.0
       version: 14.1.0
     marked:
-      specifier: ^17.0.1
+      specifier: 17.0.1
       version: 17.0.1
   framework:
     '@zinkawaii/tsconfig':

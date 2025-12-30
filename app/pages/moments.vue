@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { computed, onMounted, ref } from 'vue'
 import 'dayjs/locale/zh-cn'
+import MusicPlayer from '~/components/moment/MusicPlayer.vue'
 
 dayjs.extend(relativeTime)
 
@@ -449,14 +450,7 @@ function showCommentSection() {
 						<div class="talk-content">
 							<div class="talk_content_text" v-html="item.content.text" />
 
-						<div v-if="item.content.music">
-							<meting-js
-								v-if="item.content.music.type === 'tencent'"
-								:id="item.content.music.id"
-								:server="item.content.music.server"
-								:api="item.content.music.api"
-							/>
-						</div>
+						<MusicPlayer v-if="item.content.music" :list="[item.content.music]" />
 
 							<div v-if="item.content.images.length" class="zone_imgbox">
 								<figure

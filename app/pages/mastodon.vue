@@ -1,0 +1,607 @@
+<script setup lang="ts">
+import type { TransformedMastodonItem } from '../types/mastodon'
+import { toDate } from 'date-fns-tz'
+import { marked } from 'marked'
+import { onMounted, ref } from 'vue'
+import { fetchMastodonPosts } from '../mastodon'
+import WebsiteCard from '../components/WebsiteCard.vue'
+import MusicPlayer from '../components/moment/MusicPlayer.vue'
+
+const layoutStore = useLayoutStore()
+layoutStore.setAside(['blog-stats', 'blog-tech', 'blog-log', 'comm-group'])
+
+const title = 'Mastodon'
+const description = '我的 Mastodon 动态'
+const image = 'https://bing.kemeow.top/picture/2025-12-30.webp'
+useSeoMeta({ title, description, ogImage: image })
+
+const { author } = useAppConfig()
+
+const recentPosts = ref<TransformedMastodonItem[]>([])
+const isLoading = ref(true)
+const loadError = ref(false)
+const currentPage = ref(1)
+const hasMore = ref(true)
+
+async function loadPosts(showLoading = true) {
+	if (showLoading) {
+		isLoading.value = true
+		loadError.value = false
+	}
+
+	try {
+		const posts = await fetchMastodonPosts()
+		const sortedPosts = [...posts]
+			.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+			.slice(0, 30)
+
+		recentPosts.value = sortedPosts
+		hasMore.value = sortedPosts.length >= 30
+	}
+	catch (error) {
+		console.error('获取 Mastodon 数据失败:', error)
+		loadError.value = true
+	}
+	finally {
+		if (showLoading) {
+			isLoading.value = false
+		}
+	}
+}
+
+onMounted(async () => {
+	loadPosts()
+})
+
+function replyPost(content?: string): void {
+	const input = document.querySelector('#twikoo .tk-input textarea')
+	if (!(input instanceof HTMLTextAreaElement))
+		return
+
+	if (content?.trim()) {
+		const quotes = content.split('\n').map(str => `> ${str}`)
+		input.value = `${quotes}\n\n`
+	}
+	else {
+		input.value = ''
+	}
+	input.dispatchEvent(new InputEvent('input'))
+
+	const length = input.value.length
+	input.setSelectionRange(length, length)
+	input.focus()
+}
+
+function getPostDate(date?: string | Date) {
+	if (!date) {
+		return ''
+	}
+
+	const appConfig = useAppConfig()
+	return toDate(date, { timeZone: appConfig.timezone })
+		.toLocaleString(undefined, {
+			year: 'numeric',
+			month: '2-digit',
+			day: '2-digit',
+			hour: '2-digit',
+			minute: '2-digit',
+		})
+		.replace(/\//g, '-')
+}
+
+// 处理图片显示
+function showImage(imageData: string[]) {
+	if (imageData.length > 0) {
+		window.open(imageData[0], '_blank')
+	}
+}
+
+// 配置 marked 选项
+marked.setOptions({
+	breaks: true, // 启用换行符转换
+	gfm: true, // 启用 GitHub Flavored Markdown
+})
+
+// 渲染 Markdown 文本
+function renderMarkdown(text?: string) {
+	if (!text) return ''
+	
+	try {
+		// 使用 marked 渲染 Markdown
+		return marked(text)
+	} catch (error) {
+		console.error('Markdown 渲染错误:', error)
+		// 如果渲染失败，返回原始文本（转义 HTML 防止 XSS）
+		return text.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+	}
+}
+</script>
+
+<template>
+<ZPageBanner :title :description :image />
+
+<div class="mastodon-list">
+	<!-- 加载状态 -->
+	<template v-if="isLoading">
+		<div class="loading-state">
+			<div v-for="i in 3" :key="`skeleton-${i}`" class="skeleton">
+				<div class="skeleton-meta">
+					<div class="skeleton-avatar" />
+					<div class="skeleton-info">
+						<div class="skeleton-nick" />
+						<div class="skeleton-date" />
+					</div>
+				</div>
+				<div class="skeleton-content">
+					<div class="skeleton-text" />
+					<div class="skeleton-text" />
+					<div class="skeleton-text" />
+				</div>
+				<div class="skeleton-bottom">
+					<div class="skeleton-tags" />
+				</div>
+			</div>
+		</div>
+	</template>
+
+	<!-- 错误状态 -->
+	<template v-else-if="loadError">
+		<div class="error-state">
+			<div class="error-content">
+				<Icon name="ph:alert-circle-bold" class="error-icon" />
+				<h3>加载失败</h3>
+				<p>获取 Mastodon 数据时出现错误，请稍后重试</p>
+				<button class="retry-btn" @click="() => loadPosts()">
+					<Icon name="ph:refresh-bold" />
+					重试
+				</button>
+			</div>
+		</div>
+	</template>
+
+	<!-- 内容状态 -->
+	<template v-else>
+		<!-- 空状态 -->
+		<div v-if="recentPosts.length === 0" class="empty-state">
+			<Icon name="ph:chat-circle-bold" class="empty-icon" />
+			<p>暂无 Mastodon 动态</p>
+		</div>
+
+		<!-- 内容列表 -->
+		<transition-group v-else name="post-fade" tag="div">
+			<div v-for="post in recentPosts" :key="post.id" class="post-item">
+				<!-- 转发或回复标识 -->
+				<div v-if="post.isReblog" class="post-notice reblog">
+					<Icon name="ph:repeat-bold" />
+					<span>转发了</span>
+				</div>
+				<div v-if="post.isReply" class="post-notice reply">
+					<Icon name="ph:arrow-bend-left-up-bold" />
+					<span>回复了</span>
+				</div>
+
+				<div class="post-meta">
+					<NuxtImg class="avatar" :src="author.avatar" :alt="author.name" />
+					<div class="info">
+						<div class="nick">
+							{{ author.name }}
+							<Icon class="verified" name="i-material-symbols:verified" />
+						</div>
+						<div class="date">
+							{{ getPostDate(post.date) }}
+						</div>
+					</div>
+				</div>
+
+				<div class="post-content">
+					<div v-if="post.text" class="text" v-html="renderMarkdown(post.text)" />
+					<WebsiteCard v-if="post.website" :title="post.website.title" :url="post.website.url" :description="post.website.description" />
+					<MusicPlayer v-if="post.music" :list="[post.music]" />
+					<div v-if="post.images && post.images.length > 0" class="images">
+						<Pic v-for="(image, index) in post.images" :key="index" class="image" :src="image" />
+						<div v-if="post.images.length > 1" class="show-image-btn" @click="showImage(post.images)">
+							[显示所有图片]
+						</div>
+					</div>
+					<VideoEmbed v-if="post.video" class="video" v-bind="post.video" height="" />
+				</div>
+
+				<div class="post-bottom">
+					<div class="tags">
+						<span v-for="tag in post.tags" :key="tag" class="tag">
+							<Icon name="ph:tag-bold" />
+							<span>#{{ tag }}</span>
+						</span>
+					</div>
+					<button v-tip="'评论'" class="comment-btn" @click="replyPost(post.text)">
+						<Icon name="ph:chats-bold" />
+					</button>
+				</div>
+			</div>
+		</transition-group>
+
+		<div class="post-footer">
+			<p>仅显示最近 30 条记录</p>
+		</div>
+	</template>
+</div>
+
+<PostComment />
+</template>
+
+<style lang="scss" scoped>
+.mastodon-list {
+  animation: float-in .2s backwards;
+  margin: 1rem;
+
+  .post-item {
+    animation: float-in .3s backwards;
+    animation-delay: var(--delay);
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px var(--c-bg-soft);
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+
+    .post-notice {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.85rem;
+      color: var(--c-text-3);
+      margin-bottom: 0.2rem;
+
+      &.reblog {
+        color: var(--c-green);
+      }
+
+      &.reply {
+        color: var(--c-blue);
+      }
+    }
+
+    .post-meta {
+      align-items: center;
+      display: flex;
+      gap: 10px;
+
+      .avatar {
+        border-radius: 2em;
+        box-shadow: 2px 4px 1rem var(--ld-shadow);
+        width: 3em;
+      }
+
+      .nick {
+        align-items: center;
+        display: flex;
+        gap: 5px;
+      }
+
+      .date {
+        color: var(--c-text-3);
+        font-family: var(--font-monospace);
+        font-size: .8rem;
+      }
+
+      .verified {
+        color: var(--c-primary);
+        font-size: 16px;
+      }
+    }
+
+    .post-content {
+      color: var(--c-text-2);
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      line-height: 1.6;
+
+      :deep(a[href]) {
+        margin: -.1em -.2em;
+        padding: .1em .2em;
+        background: linear-gradient(var(--c-primary-soft), var(--c-primary-soft)) no-repeat center bottom / 100% .1em;
+        color: var(--c-primary);
+        transition: all .2s;
+
+        &:hover {
+          border-radius: .3em;
+          background-size: 100% 100%;
+        }
+      }
+
+      :deep(.emoji) {
+        width: 1.2em;
+        height: 1.2em;
+        vertical-align: middle;
+        margin: 0 0.1em;
+      }
+
+      .images {
+        display: grid;
+        gap: 8px;
+        grid-template-columns: repeat(3, 1fr);
+        position: relative;
+
+        .image {
+          border-radius: 8px;
+          overflow: hidden;
+          padding-bottom: 100%;
+          position: relative;
+
+          :deep(img) {
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            transition: transform .3s;
+            width: 100%;
+
+            &:hover {
+              transform: scale(1.05);
+            }
+          }
+        }
+
+        .show-image-btn {
+          position: absolute;
+          bottom: 5px;
+          right: 5px;
+          background: rgba(0, 0, 0, 0.7);
+          color: white;
+          padding: 4px 8px;
+          border-radius: 4px;
+          font-size: 0.7rem;
+          cursor: pointer;
+          transition: all 0.2s;
+
+          &:hover {
+            background: rgba(0, 0, 0, 0.8);
+          }
+        }
+      }
+
+      .video {
+        border-radius: 8px;
+        margin: 0;
+      }
+    }
+
+    .post-bottom {
+      align-items: center;
+      color: var(--c-text-3);
+      display: flex;
+      justify-content: space-between;
+
+      .tags {
+        display: flex;
+        font-size: .7rem;
+        gap: 4px;
+      }
+
+      .tag {
+        display: flex;
+        padding: 2px 4px;
+        border-radius: 4px;
+        background-color: var(--c-bg-2);
+        align-items: center;
+        cursor: pointer;
+        transition: all .2s;
+
+        &:hover {
+          opacity: .8;
+        }
+      }
+
+      .tag .i-ph\:tag-bold + * {
+        margin-left: .15em;
+      }
+    }
+  }
+
+  .post-footer {
+    color: var(--c-text-3);
+    font-size: 1rem;
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  /* 过渡动画 */
+  .post-fade-enter-active,
+  .post-fade-leave-active {
+    transition: all 0.3s ease;
+  }
+
+  .post-fade-enter-from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .post-fade-leave-to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  /* 加载状态 */
+  .loading-state {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .skeleton {
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px var(--c-bg-soft);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .skeleton-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .skeleton-avatar {
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    background: linear-gradient(90deg, var(--c-bg-2) 25%, var(--c-bg-soft) 50%, var(--c-bg-2) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+
+  .skeleton-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .skeleton-nick {
+    width: 120px;
+    height: 18px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--c-bg-2) 25%, var(--c-bg-soft) 50%, var(--c-bg-2) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+
+  .skeleton-date {
+    width: 100px;
+    height: 14px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--c-bg-2) 25%, var(--c-bg-soft) 50%, var(--c-bg-2) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+
+  .skeleton-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .skeleton-text {
+    height: 16px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--c-bg-2) 25%, var(--c-bg-soft) 50%, var(--c-bg-2) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+
+  .skeleton-text:nth-child(2) {
+    width: 80%;
+  }
+
+  .skeleton-text:nth-child(3) {
+    width: 60%;
+  }
+
+  .skeleton-bottom {
+    height: 24px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--c-bg-2) 25%, var(--c-bg-soft) 50%, var(--c-bg-2) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+
+  /* 错误状态 */
+  .error-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px var(--c-bg-soft);
+    margin: 1rem 0;
+  }
+
+  .error-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .error-icon {
+    font-size: 3rem;
+    color: var(--c-primary);
+  }
+
+  .error-state h3 {
+    font-size: 1.2rem;
+    margin: 0;
+    color: var(--c-text-1);
+  }
+
+  .error-state p {
+    color: var(--c-text-3);
+    margin: 0;
+  }
+
+  .retry-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--c-primary);
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: var(--c-primary-hover);
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  /* 空状态 */
+  .empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px var(--c-bg-soft);
+    margin: 1rem 0;
+    color: var(--c-text-3);
+  }
+
+  .empty-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* 加载动画 */
+  @keyframes loading {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  /* 淡入动画 */
+  @keyframes float-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+</style>
