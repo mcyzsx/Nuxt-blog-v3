@@ -8,7 +8,7 @@ const icon = computed(() => props.icon || getDomainIcon(props.href))
 const isExternal = computed(() => isExtLink(props.href))
 const resolvedHref = computed(() => (isExternal.value ? `/go?url=${encodeURIComponent(props.href)}` : props.href))
 const tip = computed(() => ({
-	content: isExternal.value ? getDomain(props.href) : decodeURIComponent(props.href),
+	content: isExtLink(props.href) ? getDomain(props.href) : safelyDecodeUriComponent(props.href),
 	inlinePositioning: true,
 }))
 </script>

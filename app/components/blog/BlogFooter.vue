@@ -9,28 +9,30 @@ const currentYear = new Date().getFullYear()
 /* 随机友链 */
 const randomFeeds = ref<any[]>([])
 function initializeRandomFeeds() {
-  const allFeeds = feeds.flatMap((g: any) =>
-    g.entries.map((e: any) => ({
-      text: e.author,
-      url: e.link,
-      icon: 'ph:link-bold',
-    })),
-  )
-  randomFeeds.value = [...allFeeds].sort(() => 0.5 - Math.random()).slice(0, 4)
+	const allFeeds = feeds.flatMap((g: any) =>
+		g.entries.map((e: any) => ({
+			text: e.author,
+			url: e.link,
+			icon: 'ph:link-bold',
+		})),
+	)
+	randomFeeds.value = [...allFeeds].sort(() => 0.5 - Math.random()).slice(0, 4)
 }
 
 /* 一言 */
 const hitokoto = ref('')
 const showHitokoto = ref(false)
 async function fetchHitokoto() {
-  try {
-    const r = await fetch('https://v1.hitokoto.cn/?c=f&encode=text')
-    hitokoto.value = await r.text()
-  } catch {
-    hitokoto.value = '暂无法获取一言...'
-  } finally {
-    showHitokoto.value = true
-  }
+	try {
+		const r = await fetch('https://v1.hitokoto.cn/?c=f&encode=text')
+		hitokoto.value = await r.text()
+	}
+	catch {
+		hitokoto.value = '暂无法获取一言...'
+	}
+	finally {
+		showHitokoto.value = true
+	}
 }
 
 /* 初始化 */
@@ -38,143 +40,145 @@ initializeRandomFeeds()
 fetchHitokoto()
 
 interface UmamiStatsResponse {
-  today_uv: number | null
-  today_pv: number | null
-  yesterday_uv: number | null
-  yesterday_pv: number | null
-  last_month_pv: number | null
-  last_year_pv: number | null
-  online_users: number | null
+	today_uv: number | null
+	today_pv: number | null
+	yesterday_uv: number | null
+	yesterday_pv: number | null
+	last_month_pv: number | null
+	last_year_pv: number | null
+	online_users: number | null
 }
 
 const umamiStats = ref<UmamiStatsResponse | null>(null)
 
 async function fetchUmamiStats() {
-  const url = (appConfig as any).analytics?.umamiStatsApi as string | undefined
+	const url = (appConfig as any).analytics?.umamiStatsApi as string | undefined
 
-  if (!import.meta.client || !url)
-    return
+	if (!import.meta.client || !url)
+		return
 
-  try {
-    const res = await fetch(url)
-    if (!res.ok)
-      throw new Error(`Failed to fetch Umami stats: ${res.status}`)
+	try {
+		const res = await fetch(url)
+		if (!res.ok)
+			throw new Error(`Failed to fetch Umami stats: ${res.status}`)
 
-    umamiStats.value = await res.json()
-  }
-  catch (error) {
-    console.error('Failed to load Umami stats:', error)
-  }
+		umamiStats.value = await res.json()
+	}
+	catch (error) {
+		console.error('Failed to load Umami stats:', error)
+	}
 }
 
 onMounted(() => {
-  fetchUmamiStats()
+	fetchUmamiStats()
 })
 
 /* 刷新友链 */
 function refreshFeeds() {
-  initializeRandomFeeds()
+	initializeRandomFeeds()
 }
 </script>
 
 <template>
 <footer class="blog-footer">
-  <nav class="footer-nav">
-    <div
-      v-for="(group, idx) in appConfig.footer.nav"
-      :key="idx"
-      class="footer-nav-group"
-    >
-      <h3 v-if="group.title">{{ group.title }}</h3>
-      <menu>
-        <li v-for="(it, i) in group.items" :key="i">
-          <UtilLink :to="it.url">
-            <Icon :name="it.icon" />
-            <span class="nav-text">{{ it.text }}</span>
-          </UtilLink>
-        </li>
-      </menu>
-    </div>
-  </nav>
+	<nav class="footer-nav">
+		<div
+			v-for="(group, idx) in appConfig.footer.nav"
+			:key="idx"
+			class="footer-nav-group"
+		>
+			<h3 v-if="group.title">
+				{{ group.title }}
+			</h3>
+			<menu>
+				<li v-for="(it, i) in group.items" :key="i">
+					<UtilLink :to="it.url">
+						<Icon :name="it.icon" />
+						<span class="nav-text">{{ it.text }}</span>
+					</UtilLink>
+				</li>
+			</menu>
+		</div>
+	</nav>
 
-  <!-- 单行友链 -->
-  <div class="footer-nav-group friends-line">
-    <h3>友链</h3>
-    <button
-      aria-label="刷新"
-      class="refresh-button"
-      title="刷新友链"
-      @click="refreshFeeds"
-    >
-      <Icon name="ph:arrow-clockwise-bold" />
-    </button>
+	<!-- 单行友链 -->
+	<div class="footer-nav-group friends-line">
+		<h3>友链</h3>
+		<button
+			aria-label="刷新"
+			class="refresh-button"
+			title="刷新友链"
+			@click="refreshFeeds"
+		>
+			<Icon name="ph:arrow-clockwise-bold" />
+		</button>
 
-    <UtilLink
-      v-for="(f, i) in randomFeeds"
-      :key="i"
-      :to="f.url"
-      external
-      class="friend-link"
-    >
-      <Icon :name="f.icon" />
-      <span>{{ f.text }}</span>
-    </UtilLink>
+		<UtilLink
+			v-for="(f, i) in randomFeeds"
+			:key="i"
+			:to="f.url"
+			external
+			class="friend-link"
+		>
+			<Icon :name="f.icon" />
+			<span>{{ f.text }}</span>
+		</UtilLink>
 
-    <UtilLink to="/link" external class="friend-link">
-      <span>更多…</span>
-    </UtilLink>
-  </div>
+		<UtilLink to="/link" external class="friend-link">
+			<span>更多…</span>
+		</UtilLink>
+	</div>
 
-  <!-- 版权条（直接搬过来的） -->
-  <div class="copyright-bar">
-    <div class="time-line">
-      <span class="power-by">
-        ©{{ appConfig.timeStart }} — {{ currentYear }} Powerby
-      </span>
-      <a
-        class="copyright-link"
-        :href="appConfig.url"
-        :title="appConfig.title"
-        target="_blank"
-        rel="noopener"
-      >
-        <img
-          class="logo"
-          :alt="appConfig.title"
-          :src="appConfig.header.logo"
-          :class="{ circle: appConfig.header.showTitle }"
-          width="25"
-          height="25"
-          loading="lazy"
-        />
-        <span class="title">{{ appConfig.title }}</span>
-      </a>
-      <div v-if="umamiStats" class="footer-stats">
-        <Icon name="material-symbols:insights" />
-        <span class="footer-stats-item">
-          今日 PV {{ umamiStats.today_pv ?? '—' }}
-        </span>
-        <span class="footer-stats-item">
-          UV {{ umamiStats.today_uv ?? '—' }}
-        </span>
-        <span v-if="umamiStats.online_users != null" class="footer-stats-item">
-          在线 {{ umamiStats.online_users }}
-        </span>
-      </div>
-    </div>
-    <div class="theme-line">
-      <span>采用</span>
-      <a href="https://github.com/L33Z22L11/blog-v3" target="_blank" rel="noopener">
-        {{ appConfig.other.Themes_Info }}
-      </a>
-      <span>主题</span>
-    </div>
-  </div>
+	<!-- 版权条（直接搬过来的） -->
+	<div class="copyright-bar">
+		<div class="time-line">
+			<span class="power-by">
+				©{{ appConfig.timeStart }} — {{ currentYear }} Powerby
+			</span>
+			<a
+				class="copyright-link"
+				:href="appConfig.url"
+				:title="appConfig.title"
+				target="_blank"
+				rel="noopener"
+			>
+				<img
+					class="logo"
+					:alt="appConfig.title"
+					:src="appConfig.header.logo"
+					:class="{ circle: appConfig.header.showTitle }"
+					width="25"
+					height="25"
+					loading="lazy"
+				>
+				<span class="title">{{ appConfig.title }}</span>
+			</a>
+			<div v-if="umamiStats" class="footer-stats">
+				<Icon name="material-symbols:insights" />
+				<span class="footer-stats-item">
+					今日 PV {{ umamiStats.today_pv ?? '—' }}
+				</span>
+				<span class="footer-stats-item">
+					UV {{ umamiStats.today_uv ?? '—' }}
+				</span>
+				<span v-if="umamiStats.online_users != null" class="footer-stats-item">
+					在线 {{ umamiStats.online_users }}
+				</span>
+			</div>
+		</div>
+		<div class="theme-line">
+			<span>采用</span>
+			<a href="https://github.com/L33Z22L11/blog-v3" target="_blank" rel="noopener">
+				{{ appConfig.other.Themes_Info }}
+			</a>
+			<span>主题</span>
+		</div>
+	</div>
 
-  <!-- 一言 -->
-  <p class="hitokoto" :class="{ 'hitokoto-fade-in': showHitokoto }">
-    {{ hitokoto }}
-  </p>
+	<!-- 一言 -->
+	<p class="hitokoto" :class="{ 'hitokoto-fade-in': showHitokoto }">
+		{{ hitokoto }}
+	</p>
 </footer>
 </template>
 

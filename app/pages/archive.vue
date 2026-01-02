@@ -11,7 +11,7 @@ useSeoMeta({
 	title: '归档',
 	description: `${appConfig.title}的所有文章归档。`,
 })
-const birthYear = appConfig.component.stats.birthYear
+const birthYear = computed(() => appConfig.component.stats.birthYear)
 
 const layoutStore = useLayoutStore()
 layoutStore.setAside(['blog-stats', 'blog-log', 'latest-comments', 'comm-group', 'poetry']) // 你的文章类型声明路径

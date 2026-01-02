@@ -1,6 +1,5 @@
 <script setup lang="ts">
-const appConfig = useAppConfig()
-const timeEstablished = appConfig.timeEstablished
+const { timeEstablished } = useAppConfig()
 
 const blogLog = [
 	{ label: timeEstablished, value: '开始魔改博客' },
