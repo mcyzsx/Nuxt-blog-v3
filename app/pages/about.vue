@@ -79,7 +79,7 @@ onMounted(async () => {
 <!-- 外链样式 -->
 <link href="/assets/css/about.css" rel="stylesheet">
 
-<div id="about-page" style="margin-top:1rem;margin-left:1rem;margin-right:1rem;">
+<div id="about-page" style="margin-top: 1rem;margin-right: 1rem;margin-left: 1rem;">
 	<!-- 顶部作者信息 -->
 	<Author />
 
@@ -137,7 +137,7 @@ onMounted(async () => {
 						v-tip="'Telegram'"
 						class="social-link"
 						icon="ph:telegram-logo-bold"
-						to="https://t.me/KemiaoJun"
+						to="https://t.me/zsxcoderchat_bot"
 						aria-label="Telegram 联系方式"
 					/>
 					<ZButton
@@ -180,49 +180,49 @@ onMounted(async () => {
 <style lang="scss" scoped>
 /* ===== 社交卡片 ===== */
 .author-content-item.social {
-  width: 100%;
-  text-align: center;
+	width: 100%;
+	text-align: center;
 }
 
 .social-list {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 1rem;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 1rem;
+	margin-top: 1rem;
 }
 
 .social-link {
-  width: 48px;
-  height: 48px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: var(--c-bg-1);
-  border: 1px solid var(--c-border);
-  color: var(--c-text-1);
-  font-size: 1.5rem;
-  transition: all .25s ease;
-  box-shadow: var(--heo-shadow-border);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	border: 1px solid var(--c-border);
+	border-radius: 50%;
+	box-shadow: var(--heo-shadow-border);
+	background: var(--c-bg-1);
+	font-size: 1.5rem;
+	color: var(--c-text-1);
+	transition: all 0.25s ease;
 
-  &:hover {
-    background: var(--c-bg-soft);
-    color: var(--c-primary, var(--c-text));
-    transform: translateY(-2px);
-  }
+	&:hover {
+		background: var(--c-bg-soft);
+		color: var(--c-primary, var(--c-text));
+		transform: translateY(-2px);
+	}
 }
 
 /* 移动端微调 */
 @media screen and (max-width: 768px) {
-  .social-list {
-    gap: 0.75rem;
-  }
+	.social-list {
+		gap: 0.75rem;
+	}
 
-  .social-link {
-    width: 44px;
-    height: 44px;
-    font-size: 1.4rem;
-  }
+	.social-link {
+		width: 44px;
+		height: 44px;
+		font-size: 1.4rem;
+	}
 }
 </style>
