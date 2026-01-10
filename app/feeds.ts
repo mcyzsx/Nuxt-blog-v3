@@ -3,7 +3,7 @@ import { getFavicon, getGhAvatar, getGhIcon } from './utils/img'
 
 export default [
 	{
-		name: '推荐的博客',
+		name: '推荐博客',
 		entries: [
 			{
 				author: '纸鹿本鹿',
@@ -110,7 +110,7 @@ export default [
 		],
 	},
 	{
-		name: '程序猿',
+		name: '网上邻居',
 		entries: [
 			{
 				author: 'Cynosura',
