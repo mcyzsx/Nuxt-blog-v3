@@ -6,9 +6,12 @@ const appConfig = useAppConfig()
 const commentEl = useTemplateRef('comment')
 const popoverEl = useTemplateRef<TippyComponent>('popover')
 const popoverJumpTo = ref('')
+const popoverInputEl = useTemplateRef('popover-input')
+const showUndo = ref(false)
 
 const popoverBind = ref<TippyComponent['$props']>({})
 
+/** 评论区链接守卫 */
 useEventListener(commentEl, 'click', (e) => {
 	if (!(e.target instanceof HTMLElement))
 		return
@@ -27,19 +30,31 @@ useEventListener(commentEl, 'click', (e) => {
 	if (popoverTarget?.target === '_blank') {
 		popoverEl.value?.hide()
 
-		popoverJumpTo.value = popoverTarget.href
+		e.preventDefault()
+		popoverJumpTo.value = safelyDecodeUriComponent(popoverTarget.href)
+		nextTick(() => checkUndoable())
 		popoverBind.value = {
 			getReferenceClientRect: () => popoverTarget.getBoundingClientRect(),
 			triggerTarget: popoverTarget,
 		}
 
 		popoverEl.value?.show()
-		e.preventDefault()
 	}
 }, { capture: true })
 
-function confirmOpen(url: string) {
-	window.open(url, '_blank')
+function checkUndoable() {
+	showUndo.value = popoverInputEl.value?.textContent !== popoverJumpTo.value
+}
+
+function undo() {
+	if (!popoverInputEl.value)
+		return
+	popoverInputEl.value.textContent = popoverJumpTo.value
+	checkUndoable()
+}
+
+function confirmOpen() {
+	window.open(popoverInputEl.value?.textContent, '_blank')
 }
 
 onMounted(() => {
@@ -61,17 +76,35 @@ onMounted(() => {
 	<Tooltip
 		ref="popover"
 		v-bind="popoverBind"
-		:append-to="() => commentEl"
+		:append-to="() => commentEl!"
 		interactive
+		:aria="{ expanded: false }"
 		trigger="focusin"
 	>
 		<template #content>
 			<div class="popover-confirm">
-				{{ safelyDecodeUriComponent(popoverJumpTo) }}
+				<span
+					ref="popover-input"
+					class="input"
+					contenteditable="plaintext-only"
+					spellcheck="false"
+					@input="checkUndoable"
+					@keydown.enter.prevent="confirmOpen"
+					v-text="popoverJumpTo"
+				/>
+
+				<button
+					v-if="showUndo"
+					aria-label="恢复原始内容"
+					@click="undo()"
+				>
+					<Icon name="ph:arrow-u-up-left-bold" />
+				</button>
+
 				<ZButton
 					primary
 					text="访问"
-					@click="confirmOpen(popoverJumpTo)"
+					@click="confirmOpen"
 				/>
 			</div>
 		</template>
@@ -93,16 +126,26 @@ onMounted(() => {
 	}
 }
 
+:deep() > [data-tippy-root] > .tippy-box {
+	padding: 0;
+}
+
 .popover-confirm {
 	display: flex;
 	align-items: center;
 	overflow-wrap: anywhere;
 
-	> .button {
+	> .input {
+		min-width: 0;
+		padding: 0.3em 0.6em;
+		outline: none;
+	}
+
+	> button {
+		flex-shrink: 0;
 		align-self: stretch;
-		margin: -0.3em -0.6em;
+		padding: 0.3em;
 		border-radius: 0 0.5em 0.5em 0;
-		margin-inline-start: 0.5em;
 	}
 }
 

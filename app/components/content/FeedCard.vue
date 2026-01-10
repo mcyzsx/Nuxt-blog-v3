@@ -33,10 +33,11 @@ function getInspectStyle(src: string): CSSProperties {
 </script>
 
 <template>
-<Tooltip :delay="200" interactive hide-on-click="toggle">
+<Tooltip :delay="200" interactive ^role="link" hide-on-click="toggle">
 	<UtilLink
 		class="feed-card gradient-card"
 		:to="error ? undefined : link"
+		rel="noopener"
 		:data-error="error"
 	>
 		<div class="avatar" :title="feed ? undefined : '无订阅源'">
@@ -76,7 +77,7 @@ function getInspectStyle(src: string): CSSProperties {
 		</div>
 		<div class="desc-content">
 			<div class="date">
-				{{ date }}
+				{{ toZonedDate(date).toLocaleDateString() }}
 			</div>
 
 			<p>{{ error ?? desc }}</p>

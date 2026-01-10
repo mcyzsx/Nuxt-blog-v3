@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type ArticleProps from '~/types/article'
+import type { ArticleProps } from '~/types/article'
 
 defineOptions({ inheritAttrs: false })
 const props = defineProps<ArticleProps>()
 
 const appConfig = useAppConfig()
 
+const coverFilter = computed(() => props.meta?.coverFilter || (props.meta?.coverDim && 'brightness(0.75)') || undefined)
 const categoryLabel = computed(() => props.categories?.[0])
 const categoryIcon = computed(() => getCategoryIcon(categoryLabel.value))
 
@@ -272,7 +273,7 @@ const { copy, copied } = useCopy(shareText)
 
 		.post-title {
 			background-image: linear-gradient(transparent, #0003, #0005);
-			text-shadow: 0 1px 1px #0003, 0 1px 2px #0003;
+			text-shadow: var(--text-black-shadow);
 
 			&.text-story {
 				text-align: center;
@@ -302,9 +303,12 @@ const { copy, copied } = useCopy(shareText)
 .post-cover {
 	position: absolute;
 	inset: 0;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
+
+	> :deep(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
 }
 
 .post-title {
@@ -315,15 +319,8 @@ const { copy, copied } = useCopy(shareText)
 }
 
 .post-nav {
-	position: relative;
-	opacity: 0.9;
 	padding: 0.8em 1rem;
-
-	// 如果在父级设置字体尺寸，会影响祖先字体尺寸改变的行为
-	// 并且设置相对尺寸会导致过渡
-	>* {
-		font-size: 0.8rem;
-	}
+	font-size: 0.8em;
 
 	.post-info {
 		display: flex;

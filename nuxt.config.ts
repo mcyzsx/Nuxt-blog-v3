@@ -140,6 +140,7 @@ export default defineNuxtConfig({
 
 	// @keep-sorted
 	modules: [
+		'@nuxt/a11y',
 		'@nuxt/content',
 		'@nuxt/hints',
 		'@nuxt/icon',

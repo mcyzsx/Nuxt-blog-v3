@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type ArticleProps from '~/types/article'
+import type { ArticleProps } from '~/types/article'
 import Autoplay from 'embla-carousel-autoplay'
 import emblaCarouselVue from 'embla-carousel-vue'
 import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures'
@@ -151,6 +151,11 @@ useEventListener(carouselEl, 'wheel', (e) => {
 	scroll-snap-align: center;
 	scroll-snap-stop: always;
 
+	// Firefox 图片 alt 为空时 fallback 失效
+	@supports (-moz-force-broken-image-icon: 1) {
+		background-color: var(--c-border);
+	}
+
 	> .cover {
 		display: block;
 		width: 100%;
@@ -161,6 +166,7 @@ useEventListener(carouselEl, 'wheel', (e) => {
 	>.stable-info, > .hover-info {
 		position: absolute;
 		text-align: center;
+		text-shadow: var(--text-black-shadow);
 		color: white;
 		transition: opacity 0.2s;
 	}
@@ -173,7 +179,6 @@ useEventListener(carouselEl, 'wheel', (e) => {
 		background-image: linear-gradient(transparent, #0003, #0005);
 		white-space: nowrap;
 		text-overflow: ellipsis;
-		text-shadow: 0 1px 1px #0003, 0 1px 2px #0003;
 	}
 
 	> .hover-info {
@@ -183,7 +188,6 @@ useEventListener(carouselEl, 'wheel', (e) => {
 		inset: 0;
 		padding: 1em;
 		backdrop-filter: brightness(0.8) saturate(10) contrast(0.8) blur(2em);
-		text-shadow: 0 1px 2px var(--ld-shadow);
 
 		> .title {
 			text-wrap: balance;

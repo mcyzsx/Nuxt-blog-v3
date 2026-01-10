@@ -2,28 +2,27 @@
 const appConfig = useAppConfig()
 const layoutStore = useLayoutStore()
 const searchStore = useSearchStore()
-const show = computed(() => layoutStore.isOpen('sidebar'))
 
-const { word } = storeToRefs(searchStore)
-const keycut = computed(() => navigator?.userAgent.includes('Mac OS') ? '⌘K' : 'Ctrl+K')
+const { text } = useTextSelection()
+const debouncedSelection = refDebounced(text)
 </script>
 
 <template>
 <BlogMask
-	v-model:show="show"
+	v-model:show="layoutStore.open.sidebar"
 	class="mobile-only"
 	@click="layoutStore.toggle('sidebar')"
 />
 
 <!-- 不能用 Transition 实现弹出收起动画，因为半宽屏状态始终显示 -->
-<aside id="blog-sidebar" :class="{ show }">
+<aside id="blog-sidebar" :class="{ show: layoutStore.open.sidebar }">
 	<BlogHeader class="sidebar-header" to="/" />
 
 	<nav class="sidebar-nav scrollcheck-y">
 		<div class="search-btn sidebar-nav-item gradient-card" @click="layoutStore.toggle('search')">
 			<Icon name="ph:magnifying-glass-bold" />
-			<span class="nav-text">{{ word || '搜索' }}</span>
-			<span class="keycut widescreen-only">{{ keycut }}</span>
+			<span class="nav-text">{{ debouncedSelection || searchStore.word || '搜索' }}</span>
+			<Key class="keycut" code="K" cmd prevent @press="layoutStore.toggle('search')" />
 		</div>
 
 		<template v-for="(group, groupIndex) in appConfig.nav" :key="groupIndex">
@@ -99,21 +98,21 @@ const keycut = computed(() => navigator?.userAgent.includes('Mac OS') ? '⌘K' :
 	display: flex;
 	align-items: center;
 	gap: 0.625em;
-	padding: 0.75em 1.25em;
-	border-radius: 12px;
-	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	background: linear-gradient(135deg, var(--c-bg-soft) 0%, var(--c-bg-card) 100%);
-	border: 1px solid var(--c-border);
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 	position: relative;
 	overflow: hidden;
+	padding: 0.75em 1.25em;
+	border: 1px solid var(--c-border);
+	border-radius: 12px;
+	box-shadow: 0 2px 8px rgb(0 0 0 / 5%);
+	background: linear-gradient(135deg, var(--c-bg-soft) 0%, var(--c-bg-card) 100%);
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-	
+
 	&:hover {
-		background: linear-gradient(135deg, rgba(var(--c-primary-rgb), 0.1) 0%, rgba(var(--c-primary-rgb), 0.05) 100%);
+		box-shadow: 0 4px 16px rgb(var(--c-primary-rgb), 0.1);
+		background: linear-gradient(135deg, rgb(var(--c-primary-rgb), 0.1) 0%, rgb(var(--c-primary-rgb), 0.05) 100%);
 		color: var(--c-text);
 		transform: translateY(-1px);
-		box-shadow: 0 4px 16px rgba(var(--c-primary-rgb), 0.1);
 	}
 
 	&::before {
@@ -123,7 +122,7 @@ const keycut = computed(() => navigator?.userAgent.includes('Mac OS') ? '⌘K' :
 		left: -100%;
 		width: 100%;
 		height: 100%;
-		background: linear-gradient(90deg, transparent, rgba(var(--c-primary-rgb), 0.1), transparent);
+		background: linear-gradient(90deg, transparent, rgb(var(--c-primary-rgb), 0.1), transparent);
 		transition: left 0.6s ease;
 	}
 
@@ -132,12 +131,12 @@ const keycut = computed(() => navigator?.userAgent.includes('Mac OS') ? '⌘K' :
 	}
 
 	&.router-link-active {
-		background: linear-gradient(135deg, rgba(var(--c-primary-rgb), 0.15) 0%, rgba(var(--c-primary-rgb), 0.08) 100%);
-		color: var(--c-primary);
-		box-shadow: 0 2px 8px rgba(var(--c-primary-rgb), 0.15);
-		font-weight: 600;
 		position: relative;
 		overflow: hidden;
+		box-shadow: 0 2px 8px rgb(var(--c-primary-rgb), 0.15);
+		background: linear-gradient(135deg, rgb(var(--c-primary-rgb), 0.15) 0%, rgb(var(--c-primary-rgb), 0.08) 100%);
+		font-weight: 600;
+		color: var(--c-primary);
 	}
 
 	&.router-link-active::before {
@@ -155,11 +154,11 @@ const keycut = computed(() => navigator?.userAgent.includes('Mac OS') ? '⌘K' :
 	&.router-link-active::after {
 		content: "•";
 		width: 1em;
+		margin-left: 2px;
+		font-size: 1.4em;
+		font-weight: bold;
 		text-align: center;
 		color: var(--c-primary);
-		font-weight: bold;
-		font-size: 1.4em;
-		margin-left: 2px;
 	}
 
 	&:not(.router-link-active)::before {
@@ -174,6 +173,9 @@ const keycut = computed(() => navigator?.userAgent.includes('Mac OS') ? '⌘K' :
 
 	.nav-text {
 		flex-grow: 1;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 	}
 
 	.external-tip {
@@ -189,6 +191,7 @@ const keycut = computed(() => navigator?.userAgent.includes('Mac OS') ? '⌘K' :
 	outline: 1px solid var(--c-border);
 	outline-offset: -1px;
 	cursor: text;
+	user-select: none;
 
 	&:hover {
 		outline-color: transparent;

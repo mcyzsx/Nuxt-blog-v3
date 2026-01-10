@@ -1,5 +1,5 @@
-<!-- <script setup lang="ts">
-import type ArticleProps from '~/types/article'
+<script setup lang="ts">
+import type { ArticleProps } from '~/types/article'
 
 defineOptions({ inheritAttrs: false })
 defineProps<ArticleProps>()
