@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import type { ArticleProps } from '~/types/article'
+import type ArticleProps from '~/types/article'
 
 defineOptions({ inheritAttrs: false })
 const props = defineProps<ArticleProps>()
 
 const appConfig = useAppConfig()
 
-const coverFilter = computed(() => props.meta?.coverFilter || (props.meta?.coverDim && 'brightness(0.75)') || undefined)
 const categoryLabel = computed(() => props.categories?.[0])
 const categoryIcon = computed(() => getCategoryIcon(categoryLabel.value))
 
@@ -14,7 +13,8 @@ const shareText = `【${appConfig.title}】${props.title}\n\n${
 	props.description ? `${props.description}\n\n` : ''}${
 	new URL(props.path!, appConfig.url).href}`
 
-const { copy, copied } = useCopy(shareText)
+// 未使用包体内容
+// const { copy, copied } = useCopy(shareText)
 </script>
 
 <template>
@@ -32,23 +32,21 @@ const { copy, copied } = useCopy(shareText)
 		</div>
 
 		<div v-if="!meta?.hideInfo" class="post-info">
-			<time
+			<UtilDate
 				v-if="date"
-				v-tip="`创建于 ${getLocaleDatetime(props.date)}`"
-				:datetime="getIsoDatetime(date)"
-			>
-				<Icon name="ph:calendar-dots-bold" />
-				{{ getPostDate(props.date) }}
-			</time>
+				v-tip
+				tip-prefix="创建于"
+				:date="date"
+				icon="ph:calendar-dots-bold"
+			/>
 
-			<time
-				v-if="isTimeDiffSignificant(date, updated, .999)"
-				v-tip="`修改于 ${getLocaleDatetime(props.updated)}`"
-				:datetime="getIsoDatetime(updated)"
-			>
-				<Icon name="ph:calendar-plus-bold" />
-				{{ getPostDate(props.updated) }}
-			</time>
+			<UtilDate
+				v-if="updated && isTimeDiffSignificant(date, updated, .999)"
+				v-tip
+				tip-prefix="修改于"
+				:date="updated"
+				icon="ph:calendar-plus-bold"
+			/>
 
 			<span v-if="categoryLabel">
 				<Icon :name="categoryIcon" />
@@ -233,7 +231,6 @@ const { copy, copied } = useCopy(shareText)
 }
 </style>
 
-<!-- 隐藏起来的样式 -->
 <!-- <style lang="scss" scoped>
 .post-header {
 	display: flex;
@@ -250,22 +247,17 @@ const { copy, copied } = useCopy(shareText)
 		border-radius: 0;
 	}
 
-	&:hover .operations {
+	&:hover .operations,
+	&:focus-within .operations {
 		opacity: 1;
 	}
 
 	&.has-cover {
-		aspect-ratio: 16 / 9;
-    color: #fff;
-    min-height: 200px;
-    overflow: hidden;
-    overflow: clip;
-    position: relative;
-    transition: font-size .2s;
-
-		&:hover {
-			font-size: 0.8em;
-		}
+		contain: paint; // overflow hidden + position relative
+		min-height: 16rem;
+		max-height: 20rem;
+		color: white;
+		transition: font-size 0.2s;
 
 		.post-info {
 			filter: drop-shadow(0 1px 2px #000);
@@ -277,15 +269,6 @@ const { copy, copied } = useCopy(shareText)
 
 			&.text-story {
 				text-align: center;
-			}
-		}
-
-		&.text-revert {
-			text-shadow: 0 0 2px #FFF, 0 1px 0.5em #FFF;
-			color: #333;
-
-			.post-title {
-				background-image: linear-gradient(transparent, #FFF3, #FFF5);
 			}
 		}
 	}
