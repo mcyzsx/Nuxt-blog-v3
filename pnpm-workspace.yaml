@@ -69,6 +69,8 @@ catalogs:
     '@vueuse/core': ^14.2.0
     '@vueuse/nuxt': ^14.2.0
     '@vueuse/router': ^14.2.0
+    date-fns: ^4.1.0
+    date-fns-tz: ^3.2.0
     fast-xml-parser: ^5.3.4
     minisearch: ^7.2.0
     nanoid: ^5.1.6
