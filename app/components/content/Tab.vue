@@ -68,8 +68,8 @@ button {
 	&::before, &::after {
 		display: block;
 		position: absolute;
-		bottom: -0.5em;
 		inset-inline: 0.8em;
+		bottom: -0.5em;
 		height: 2px;
 		border-radius: 1em;
 		pointer-events: none;
@@ -82,7 +82,7 @@ button {
 	}
 
 	&.active {
-		box-shadow: 0 1px 0.5em var(--ld-shadow);
+		box-shadow: var(--box-shadow-1), var(--box-shadow-1);
 		background-color: var(--ld-bg-card);
 		color: var(--c-text);
 

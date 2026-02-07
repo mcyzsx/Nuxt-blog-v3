@@ -12,6 +12,9 @@ useSeoMeta({
 	description: `${appConfig.title}的所有文章归档。`,
 })
 const birthYear = computed(() => appConfig.component.stats.birthYear)
+const showTuning = ref(false)
+const spacing = ref(0)
+const column = ref(1)
 
 const layoutStore = useLayoutStore()
 layoutStore.setAside(['blog-stats', 'blog-log', 'latest-comments', 'comm-group', 'poetry']) // 你的文章类型声明路径
@@ -179,7 +182,7 @@ onClickOutside(tagDropdownRef, () => {
 		v-model:category="category"
 		:categories
 	/>
-	
+
 	<!-- 筛选器组 -->
 	<div v-if="(categories && categories.length > 1) || (tags && tags.length > 0)" class="filter-group">
 		<!-- 分类筛选 -->

@@ -13,7 +13,7 @@ const categoryIcon = computed(() => getCategoryIcon(categoryLabel.value))
 </script>
 
 <template>
-<UtilLink class="article-card card">
+<UtilLink class="article-card card upraise">
 	<NuxtImg v-if="image" class="article-cover" :src="image" :alt="title" />
 	<article>
 		<h2 class="article-title text-creative">
@@ -104,8 +104,8 @@ const categoryIcon = computed(() => getCategoryIcon(categoryLabel.value))
 .article-cover {
 	position: absolute;
 	opacity: 0.8;
-	top: 0;
 	inset-inline-end: 0;
+	top: 0;
 	width: min(320px, 50%);
 	height: 100%;
 	margin: 0;

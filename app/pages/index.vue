@@ -69,9 +69,13 @@ const listRecommended = computed(() => sort(
 	<PostSlide v-if="listRecommended.length && page === 1 && !category && !tag" :list="listRecommended" />
 
 	<div class="post-list">
-		<div class="toolbar">
-			<div>
-				<!-- 外层元素用于占位 -->
+		<PostOrderToggle
+			v-model:is-ascending="isAscending"
+			v-model:sort-order="sortOrder"
+			v-model:category="category"
+			:categories
+		>
+			<template #secret>
 				<UtilLink to="/preview" class="preview-entrance">
 					<Icon name="ph:file-lock-bold" />
 					查看预览文章

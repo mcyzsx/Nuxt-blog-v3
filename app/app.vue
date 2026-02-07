@@ -31,21 +31,7 @@ onMounted(() => {
 	<BlogAside />
 </div>
 <BlogPanel />
-<BlogPopover />
-
-<!-- 音乐播放器 - 使用原生HTML确保正确初始化 -->
-<!-- <ClientOnly>
-	<div
-		v-if="showPlayer"
-		class="netease-mini-player"
-		data-playlist-id="13681647281"
-		data-theme="auto"
-		data-position="bottom-left"
-		data-default-minimized="true"
-		data-lyric="true"
-		data-autoplay="false"
-	/>
-</ClientOnly> -->
+<BikariyaModals />
 </template>
 
 <!-- eslint-disable-next-line vue/enforce-style-attribute -->

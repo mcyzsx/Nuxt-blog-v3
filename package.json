@@ -1,12 +1,12 @@
 {
   "name": "clarity",
   "type": "module",
-  "version": "3.6.0",
+  "version": "3.6.3",
   "private": true,
-  "packageManager": "pnpm@10.27.0",
+  "packageManager": "pnpm@10.28.2",
   "homepage": "https://github.com/L33Z22L11/blog-v3",
   "engines": {
-    "node": ">=22.15 <25",
+    "node": ">=22.15",
     "pnpm": ">=10"
   },
   "scripts": {
@@ -18,8 +18,8 @@
     "build": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "bump": "pnpx taze -w && rimraf pnpm-lock.yaml && pnpm i",
-    "lint": "stylelint '**/*.{vue,scss}'",
+    "bump": "pnpx taze -w && rimraf pnpm-lock.yaml && pnpm update && pnpm dedupe",
+    "lint": "eslint && stylelint '**/*.{vue,scss}'",
     "lint:fix": "eslint --fix && stylelint '**/*.{vue,scss}' --fix",
     "init-project": "tsx scripts/init-project",
     "new": "tsx scripts/new-blog",
@@ -28,6 +28,9 @@
     "start": "nuxt generate && nuxt preview"
   },
   "dependencies": {
+    "@bikariya/image-viewer": "catalog:ui",
+    "@bikariya/modals": "catalog:ui",
+    "@bikariya/shiki": "catalog:content",
     "@nuxt/content": "catalog:content",
     "@nuxt/icon": "catalog:ui",
     "@nuxt/image": "catalog:ui",
@@ -59,6 +62,7 @@
     "radash": "catalog:util",
     "shiki": "catalog:content",
     "site-config-stack": "catalog:util",
+    "temporal-polyfill": "catalog:util",
     "vue": "catalog:framework",
     "vue-router": "catalog:framework",
     "vue-tippy": "catalog:ui",
@@ -85,8 +89,9 @@
     "p-limit": "catalog:util",
     "rehype-katex": "catalog:content",
     "rehype-meta-slots": "workspace:^",
+    "rehype-meta-slots": "workspace:^",
     "remark-math": "catalog:content",
-    "remark-music": "workspace:",
+    "remark-music": "workspace:^",
     "remark-reading-time": "catalog:content",
     "rimraf": "catalog:util",
     "sass-embedded": "catalog:framework",
